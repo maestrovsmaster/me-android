@@ -3,6 +3,7 @@ package io.forus.me.android.presentation.view.screens.vouchers.transactions_log
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
@@ -12,6 +13,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.text.style.TypefaceSpan
 import android.view.View
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.forus.me.android.domain.models.vouchers.Transaction
@@ -75,7 +77,11 @@ class TransactionsActivity : SlidingPanelActivity() {
     fun showPopupTransactionDetailsFragment(item: Transaction){
 
         //val font = Typeface.createFromAsset(assets, R.font.fgoogle_sans_regular)
-        val typeface = ResourcesCompat.getFont(this@TransactionsActivity, R.font.fgoogle_sans_regular);
+        val typeface = //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+             ResourcesCompat.getFont(this@TransactionsActivity, R.font.fgoogle_sans_regular);
+       /* }else{
+            TypefaceSpan("sans-serif-medium");
+        }*/
 
         val titleStr = "   "+getString(R.string.date_title)
         val dateStr = "  "+dateFormat.format(item.createdAt)
