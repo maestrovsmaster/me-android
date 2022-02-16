@@ -1,27 +1,21 @@
 package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment
 //import io.forus.me.android.data.entity.vouchers.response.Voucher
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.databinding.Bindable
-import android.databinding.Observable
-import android.databinding.PropertyChangeRegistry
+
 import android.util.Log
 import android.view.View
-import io.forus.me.android.domain.models.vouchers.ProductAction
+import androidx.databinding.Bindable
+
 import io.forus.me.android.domain.repository.vouchers.VouchersRepository
-import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.internal.Injection
-import io.forus.me.android.presentation.view.base.lr.PartialChange
-import io.forus.me.android.presentation.view.screens.vouchers.provider.ProviderPartialChanges
+import io.forus.me.android.presentation.view.screens.main.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
-import java.util.*
+import androidx.lifecycle.MutableLiveData
 
 
-class ActionPaymentViewModel(application: Application) : AndroidViewModel(application), Observable {
+
+class ActionPaymentViewModel(application: Application) : BaseViewModel(application) {
 
     var vouchersRepository: VouchersRepository = Injection.instance.vouchersRepository
 
@@ -140,8 +134,12 @@ class ActionPaymentViewModel(application: Application) : AndroidViewModel(applic
                 .subscribe()
     }
 
+    fun setCommitButtonEnable(enable:Boolean){
+        commitButtonEnable.value = enable
+        commitButtonAlpha.postValue(if(enable){1.0f}else{0.6f})
+    }
 
-    private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
+    /*private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         callbacks.add(callback)
@@ -152,10 +150,7 @@ class ActionPaymentViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
-    fun setCommitButtonEnable(enable:Boolean){
-        commitButtonEnable.value = enable
-        commitButtonAlpha.postValue(if(enable){1.0f}else{0.6f})
-    }
+
 
     /**
      * Notifies listeners that all properties of this instance have changed.
@@ -173,7 +168,7 @@ class ActionPaymentViewModel(application: Application) : AndroidViewModel(applic
      */
     fun notifyPropertyChanged(fieldId: Int) {
         callbacks.notifyCallbacks(this, fieldId, null)
-    }
+    }*/
 
 
 }

@@ -1,10 +1,10 @@
 package io.forus.me.android.presentation.view.screens.account.pair_device
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.helpers.reactivex.DisposableHolder
 import io.forus.me.android.presentation.internal.Injection
@@ -62,15 +62,15 @@ class PairDeviceFragment : ToolbarLRFragment<PairDeviceModel, PairDeviceView, Pa
             //bundle.putString(KEY_MSG_1, "Заменили на первый фрагмент")
             //myFragment1.setArguments(bundle)
 
-            val fragmentTransaction = fragmentManager!!
+            val fragmentTransaction = requireFragmentManager()
                     .beginTransaction()
             fragmentTransaction.replace(R.id.container_qr_fr, qrFragment,
                     null)
             fragmentTransaction.commit()
 
-        //profile_button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.error_email))
+        //profile_button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.error_email))
 
-        pin_view.setPinBackground(ContextCompat.getColor(context!!, R.color.pinBackground))
+        pin_view.setPinBackground(ContextCompat.getColor(requireContext(), R.color.pinBackground))
     }
 
     override fun onDetach() {

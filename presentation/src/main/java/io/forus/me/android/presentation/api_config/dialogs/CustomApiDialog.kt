@@ -1,8 +1,8 @@
 package io.forus.me.android.presentation.api_config.dialogs
 
 import android.content.Context
-import android.support.v4.text.HtmlCompat
 import android.text.Html
+import androidx.core.text.HtmlCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import io.forus.me.android.presentation.R
 
@@ -13,7 +13,8 @@ class CustomApiDialog(private val context: Context, customApiStr: String,  input
 
     private val dialog: MaterialDialog = MaterialDialog.Builder(context)
             .title("Custom API server")
-            .content(HtmlCompat.fromHtml("API format: <br/><b>https://{address}/</b> <i><font color='#DCDCDC'>api/v1/...</font></i>",
+            .content(
+                HtmlCompat.fromHtml("API format: <br/><b>https://{address}/</b> <i><font color='#DCDCDC'>api/v1/...</font></i>",
                     HtmlCompat.FROM_HTML_MODE_LEGACY))
             .positiveText("Save")
             .input("",customApiStr,inputCallback)

@@ -3,7 +3,8 @@ package io.forus.me.android.presentation.view.screens.vouchers.provider
 import android.content.DialogInterface
 import android.content.DialogInterface.OnDismissListener
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -138,7 +139,7 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
 
 
         if(isDemoVoucher!= null && isDemoVoucher!!) {
-            tv_organization_name.text = context!!.getString(R.string.check_email_open_mail_app)
+            tv_organization_name.text = requireContext().getString(R.string.check_email_open_mail_app)
         }else{
             if (vs.model.selectedOrganization != null) {
                 tv_organization_name.text = vs.model.selectedOrganization.name
@@ -165,7 +166,7 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
             }
         }
 
-        container.setOnClickListener { OrganizationsListDialog(context!!, vs.model.item?.allowedOrganizations!!) {
+        container.setOnClickListener { OrganizationsListDialog(requireContext(), vs.model.item?.allowedOrganizations!!) {
             selectOrganization.onNext(it)
         }.show() }
 
@@ -194,7 +195,7 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
                 }
             }
 
-            ScanVoucherBaseErrorDialog(errorMessage, context!!, object : OnDismissListener, () -> Unit {
+            ScanVoucherBaseErrorDialog(errorMessage, requireContext(), object : OnDismissListener, () -> Unit {
                 override fun invoke() {
                     activity?.finish()
                 }
@@ -219,13 +220,13 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
             demoCharge.onNext(BigDecimal.ZERO)
         }else
         if (isProduct) {
-            ApplyDialog(context!!) {
+            ApplyDialog(requireContext()) {
                 charge.onNext(BigDecimal.ZERO)
             }.show()
         } else {
             val chargeAmount = if (amount <= balance) amount else balance
             val extra = if (amount <= balance) BigDecimal.ZERO else amount.minus(balance)
-            ChargeDialog(context!!, chargeAmount, extra) {
+            ChargeDialog(requireContext(), chargeAmount, extra) {
                 charge.onNext(chargeAmount)
             }.show()
         }
@@ -235,16 +236,16 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
 
     private fun showScuccessDialog() {
 
-        val i = SuccessDialogActivity.getCallingIntent(context!!,
-                context!!.resources.getString(R.string.vouchers_apply_success),
-                context!!.resources.getString(R.string.vouchers_transaction_duration_of_payout),
-                context!!.resources.getString(R.string.me_ok))
+        val i = SuccessDialogActivity.getCallingIntent(requireContext(),
+                requireContext().resources.getString(R.string.vouchers_apply_success),
+                requireContext().resources.getString(R.string.vouchers_transaction_duration_of_payout),
+                requireContext().resources.getString(R.string.me_ok))
         activity?.finish()
         activity?.startActivity(i)
 
-        /*FullscreenDialog.display(fragmentManager,context!!.resources.getString(R.string.success),
-                context!!.resources.getString(R.string.vouchers_apply_success),
-                context!!.resources.getString(R.string.me_ok)) { activity?.finish() }*/
+        /*FullscreenDialog.display(fragmentManager,requireContext().resources.getString(R.string.success),
+                requireContext().resources.getString(R.string.vouchers_apply_success),
+                requireContext().resources.getString(R.string.me_ok)) { activity?.finish() }*/
 
     }
 

@@ -1,8 +1,8 @@
 package io.forus.me.android.presentation.view.activity
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 
 
 abstract class CommonActivity : BaseActivity() {

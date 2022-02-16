@@ -1,19 +1,22 @@
 package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.model
 //import io.forus.me.android.data.entity.vouchers.response.Voucher
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+
+import android.app.Application
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.forus.me.android.domain.models.vouchers.ProductAction
 import io.forus.me.android.domain.models.vouchers.VoucherProvider
 import io.forus.me.android.domain.repository.vouchers.VouchersRepository
 import io.forus.me.android.presentation.internal.Injection
+import io.forus.me.android.presentation.view.screens.main.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class ActionsViewModel : ViewModel() {
+class ActionsViewModel(application: Application) : BaseViewModel(application) {
 
 
     var vouchersRepository: VouchersRepository = Injection.instance.vouchersRepository
@@ -72,7 +75,7 @@ class ActionsViewModel : ViewModel() {
             init = false
         }else {
 
-            val tv = view as android.support.v7.widget.AppCompatTextView
+            val tv = view as io.forus.me.android.presentation.view.component.text.TextView
 
             val orgName = tv.text.toString()
             organizationId = selectedOrgIdByName(orgName)

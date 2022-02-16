@@ -71,7 +71,7 @@ class SendReportsFragment : ToolbarLRFragment<SendReportsModel, SendReportsView,
             token = bundle.getString(TOKEN_EXTRA, "")
         }
 
-        val display = activity!!.getWindowManager().getDefaultDisplay()
+        val display = requireActivity().windowManager.defaultDisplay
         val outMetrics = DisplayMetrics()
         display.getMetrics(outMetrics)
         val density = resources.displayMetrics.density
@@ -81,15 +81,6 @@ class SendReportsFragment : ToolbarLRFragment<SendReportsModel, SendReportsView,
             inflater.inflate(R.layout.fragment_send_reports_nokia1, container, false)
         else inflater.inflate(R.layout.fragment_send_reports, container, false)
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 
     override fun createPresenter() = SendReportsPresenter(
@@ -105,7 +96,7 @@ class SendReportsFragment : ToolbarLRFragment<SendReportsModel, SendReportsView,
         enable_send_crash_log.setOnClickListener {
 
             if(enable_send_crash_log.isChecked){
-                SharedPref.init(context!!)
+                SharedPref.init(requireContext())
                 SharedPref.write(SharedPref.OPTION_SEND_CRASH_REPORT,true)
             }
             switchSendCrashReports.onNext(!vs.model.sendCrashReportsEnabled)

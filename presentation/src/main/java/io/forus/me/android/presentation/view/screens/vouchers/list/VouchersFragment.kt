@@ -1,10 +1,10 @@
 package io.forus.me.android.presentation.view.screens.vouchers.list
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.forus.me.android.presentation.view.base.lr.LRViewState
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.internal.Injection
@@ -62,7 +62,7 @@ class VouchersFragment : ToolbarLRFragment<VouchersModel, VouchersView, Vouchers
 
         info_button.setImageResource(R.drawable.ic_transactions)
         info_button.setOnClickListener {
-            startActivity(TransactionsActivity.getCallingIntent(context!!))
+            startActivity(TransactionsActivity.getCallingIntent(requireContext()))
         }
 
     }

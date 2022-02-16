@@ -72,7 +72,7 @@ class PinLockFragment : LRFragment<PinLockModel, PinLockView, PinLockPresenter>(
     }
 
     private fun showConfirmLogoutDialog() {
-        LogoutDialog(context!!) { logoutBtn.onNext(Unit) }.show();
+        LogoutDialog(requireContext()) { logoutBtn.onNext(Unit) }.show();
     }
 
     override fun createPresenter() = PinLockPresenter(

@@ -3,10 +3,10 @@ package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_acti
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.view.activity.BaseActivity

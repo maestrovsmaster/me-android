@@ -3,8 +3,9 @@ package io.forus.me.android.presentation.view.screens.vouchers.dialogs
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+
+
 import io.forus.me.android.presentation.R
 import kotlinx.android.synthetic.main.dialog_fullscreen.*
 

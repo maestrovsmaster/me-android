@@ -9,13 +9,14 @@ import android.content.pm.PackageManager
 import android.graphics.PointF
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.FragmentActivity
+
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView
+import com.google.android.material.snackbar.Snackbar
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.internal.Injection
 import io.forus.me.android.presentation.qr.QrDecoderResult

@@ -1,11 +1,11 @@
 package io.forus.me.android.presentation.view.component.dividers
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.content.res.TypedArray
+
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.presentation.helpers.Converter
 
 

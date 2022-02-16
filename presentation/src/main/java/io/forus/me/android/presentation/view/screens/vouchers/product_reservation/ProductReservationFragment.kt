@@ -1,8 +1,8 @@
 package io.forus.me.android.presentation.view.screens.vouchers.product_reservation
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -74,8 +74,8 @@ class ProductReservationFragment : ToolbarLRFragment<ProductReservationModel, Pr
 
         adapter.clickListener = { voucher: Voucher, sharedViews: List<View>, position: Int ->
             if(context != null ) {
-                val intentToLaunch = ProviderActivity.getCallingIntent(context!!, voucher.address!!)
-                context!!.startActivity(intentToLaunch)
+                val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
+                requireContext().startActivity(intentToLaunch)
             }
         }
         recycler.layoutManager = LinearLayoutManager(context)

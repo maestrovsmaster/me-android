@@ -3,22 +3,19 @@ package io.forus.me.android.presentation.view.screens.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import com.example.snackbarexample.customsnackbar.chef.UpdateAppSnackbar
+import io.forus.me.android.presentation.view.component.snackbar.UpdateAppSnackbar
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.helpers.SharedPref
 import io.forus.me.android.presentation.view.activity.CommonActivity
 import io.forus.me.android.presentation.view.adapters.MainViewPagerAdapter
 import io.forus.me.android.presentation.view.screens.account.account.AccountFragment
 import io.forus.me.android.presentation.view.screens.main.MainActivity
-import io.forus.me.android.presentation.view.screens.records.categories.RecordCategoriesFragment
-import io.forus.me.android.presentation.view.screens.records.list.RecordsFragment
 import io.forus.me.android.presentation.view.screens.vouchers.list.VouchersFragment
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -28,7 +25,7 @@ class DashboardFragment : Fragment() {
 
     private var navigationAdapter: AHBottomNavigationAdapter? = null
 
-    private var currentFragment: android.support.v4.app.Fragment? = null
+    private var currentFragment: Fragment? = null
     private var currentPagerPosition = 0
 
     private var adapter: MainViewPagerAdapter? = null
@@ -88,15 +85,15 @@ class DashboardFragment : Fragment() {
         selectTab(currentPagerPosition, 0)
 
 
-        SharedPref.init(context!!)
+        SharedPref.init(requireContext())
         val neesAppUpdate = SharedPref.read(SharedPref.OPTION_NEED_APP_UPDATE,false)
         if(neesAppUpdate) {
             h.postDelayed({
                 UpdateAppSnackbar
                         .make(coordinator, View.OnClickListener {
-                            val intent = Intent(context!!, MainActivity::class.java)
-                            context!!.startActivity(intent)
-                            activity!!.finish()
+                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            requireContext().startActivity(intent)
+                            requireActivity().finish()
                         })
                         .show()
             }, 3000)

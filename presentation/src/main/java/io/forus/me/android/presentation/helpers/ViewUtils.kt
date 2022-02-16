@@ -1,9 +1,7 @@
 package io.forus.me.android.presentation.helpers
 
 import android.os.Build
-import android.support.annotation.LayoutRes
-import android.support.annotation.StyleRes
-import android.support.v4.widget.TextViewCompat
+
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewAnimator
+import androidx.annotation.LayoutRes
+import androidx.annotation.StyleRes
+import androidx.core.widget.TextViewCompat
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View =
         LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)

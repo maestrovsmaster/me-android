@@ -1,13 +1,16 @@
 package io.forus.me.android.presentation.view.fragment
 
-import android.support.v4.app.Fragment
+
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.helpers.Converter
 import io.forus.me.android.presentation.interfaces.FragmentListener
@@ -36,7 +39,7 @@ abstract class BaseFragment : Fragment(), FragmentListener {
     protected open val allowBack: Boolean
         get() = true
 
-    protected val toolbar: Toolbar
+    protected val toolbar: androidx.appcompat.widget.Toolbar?
         get() = toolbar_view
 
     protected open val toolbarTitle: String
@@ -96,11 +99,11 @@ abstract class BaseFragment : Fragment(), FragmentListener {
     protected open fun initUI(){
         setToolbarTitle(toolbarTitle)
         if (toolbarType == ToolbarLRFragment.ToolbarType.Small){
-            toolbar_title.setPadding(toolbar_title.paddingLeft, Converter.convertDpToPixel(5f, activity!!.applicationContext), toolbar_title.paddingRight, 0)
+            toolbar_title.setPadding(toolbar_title.paddingLeft, Converter.convertDpToPixel(5f, requireContext().applicationContext), toolbar_title.paddingRight, 0)
         }
 
 
-        val castActivity = activity!!
+        val castActivity = requireActivity()
         when (castActivity){
             is AppCompatActivity -> setActionBarActivity(castActivity)
 

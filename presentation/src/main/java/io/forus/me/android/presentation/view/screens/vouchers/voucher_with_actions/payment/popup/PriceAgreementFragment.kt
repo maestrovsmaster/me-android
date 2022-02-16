@@ -1,12 +1,12 @@
 package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.popup
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.databinding.FragmentActionPaymentBinding
 import io.forus.me.android.presentation.databinding.FragmentPriceAgreementBinding

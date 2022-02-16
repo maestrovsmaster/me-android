@@ -1,8 +1,8 @@
 package io.forus.me.android.presentation.view.screens.records.newrecord.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import io.forus.me.android.domain.models.records.RecordCategory
 import io.forus.me.android.presentation.view.screens.records.newrecord.viewholders.RecordCategoryVH
 

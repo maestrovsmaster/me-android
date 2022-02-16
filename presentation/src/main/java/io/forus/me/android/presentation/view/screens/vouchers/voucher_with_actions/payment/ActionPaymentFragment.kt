@@ -1,15 +1,17 @@
 package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+
 import android.content.DialogInterface
-import android.databinding.DataBindingUtil
+
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.forus.me.android.presentation.R
@@ -94,7 +96,7 @@ class ActionPaymentFragment : BaseFragment() {
             val view: View = binding.getRoot()
             binding.model = mainViewModel
 
-            mainViewModel.confirmPayment.observe(requireActivity(), Observer {
+            mainViewModel.confirmPayment.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
                 if (!it!!) return@Observer
 
                 if(product!!.priceUser > BigDecimal.ZERO) {
@@ -107,14 +109,14 @@ class ActionPaymentFragment : BaseFragment() {
                 }
             })
 
-            mainViewModel.successPayment.observe(requireActivity(), Observer {
+            mainViewModel.successPayment.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (!it!!) return@Observer
                 FullscreenDialog.display(fragmentManager, getString(R.string.vouchers_apply_success), getString(R.string.vouchers_transaction_duration_of_payout), getString(R.string.me_ok)) {
                     requireActivity().finish()
                 }
             })
 
-            mainViewModel.errorPayment.observe(requireActivity(), Observer {
+            mainViewModel.errorPayment.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 progress.visibility = View.GONE
                 btn_make.active = true
                 btn_make.isEnabled = true
@@ -129,7 +131,7 @@ class ActionPaymentFragment : BaseFragment() {
                 }
             })
 
-            mainViewModel.showPriceAgreement.observe(requireActivity(), Observer {
+            mainViewModel.showPriceAgreement.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (!it!!) return@Observer
                 Log.d("forus", "Click price agreement")
 
@@ -141,9 +143,11 @@ class ActionPaymentFragment : BaseFragment() {
                 // }.show()
             })
 
+
+
             val fragment = PriceAgreementFragment.newIntent(product!!)
 
-            val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
 
 
             transaction.replace(R.id.fragmentPanelContainer, fragment)

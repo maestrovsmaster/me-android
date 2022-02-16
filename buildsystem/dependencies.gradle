@@ -52,7 +52,7 @@ ext {
   slidingUpPanelVersion='3.3.1'
   glideVersion='3.7.0'
   fingerprintAuthVersion='1.0.1'
-  firebaseCoreVersion='16.0.1'
+  //firebaseCoreVersion='16.0.1'
   firebaseCloudMessageVersion='17.3.3'
 
 
@@ -81,7 +81,7 @@ ext {
       qrGet:              "com.github.kenglxn.QRGen:javase:${qrGenVersion}",
       qrGetAndroid:       "com.github.kenglxn.QRGen:android:${qrGenVersion}",
 
-      mvi:                "com.hannesdorfmann.mosby3:mvi:$rootProject.mviVersion", // Model-View-Intent
+     // mvi:                "com.hannesdorfmann.mosby3:mvi:$rootProject.mviVersion", // Model-View-Intent
       mviViewState:       "com.hannesdorfmann.mosby3:viewstate:$rootProject.mviVersion", // MVP + ViewState support
       rxbinding:          "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxbindingVersion",
       rxbindingSupport:   "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxbindingVersion",
@@ -98,7 +98,7 @@ ext {
       materialDialogs:    "com.afollestad.material-dialogs:core:${rootProject.materialDialogs}",
       fingerprint:        "com.multidots:fingerprint-auth:${rootProject.fingerprintAuthVersion}",
       fabric:             "com.crashlytics.sdk.android:crashlytics:${rootProject.fabric}",
-      firebaseCore:       "com.google.firebase:firebase-core:${rootProject.firebaseCoreVersion}",
+      //firebaseCore:       "com.google.firebase:firebase-core:${rootProject.firebaseCoreVersion}",
       firebaseMessaging:       "com.google.firebase:firebase-messaging:${rootProject.firebaseCloudMessageVersion}",
       googleMaps:         "com.google.android.gms:play-services-maps:${rootProject.gooleMapsVersion}",
       playCore:           "com.google.android.play:core:${rootProject.playCoreVersion}",

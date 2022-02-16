@@ -2,11 +2,11 @@ package io.forus.me.android.presentation.view.screens.records.item
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.forus.me.android.domain.exception.RetrofitException
 import io.forus.me.android.domain.exception.RetrofitExceptionMapper
 import io.forus.me.android.presentation.view.base.lr.LRViewState
@@ -105,7 +105,7 @@ class RecordDetailsFragment : ToolbarLRFragment<RecordDetailsModel, RecordDetail
         recycler.adapter = adapter
     }
 
-    override fun createPresenter() = RecordDetailsPresenter(context!!,
+    override fun createPresenter() = RecordDetailsPresenter(requireContext(),
             recordId,
             Injection.instance.recordsRepository,
             Injection.instance.validatorsRepository
@@ -139,7 +139,7 @@ class RecordDetailsFragment : ToolbarLRFragment<RecordDetailsModel, RecordDetail
 
             if(vs.model.item != null) {
                 RecordModifyDialog(activity as Activity, RecordModifyDialog.Action.EDIT) {
-                    startActivity(EditRecordActivity.getCallingIntent(context!!,vs.model.item.id, vs.model.item.recordType.name,vs.model.item.value))
+                    startActivity(EditRecordActivity.getCallingIntent(requireContext(),vs.model.item.id, vs.model.item.recordType.name,vs.model.item.value))
                     activity!!.finish()
                 }.show();
             }
@@ -163,7 +163,7 @@ class RecordDetailsFragment : ToolbarLRFragment<RecordDetailsModel, RecordDetail
                 }
             }
 
-            DeleteRecordErrorDialog(messageString,context!!).show()
+            DeleteRecordErrorDialog(messageString,requireContext()).show()
 
         }
     }

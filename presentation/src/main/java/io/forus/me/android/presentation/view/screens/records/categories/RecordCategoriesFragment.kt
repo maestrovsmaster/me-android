@@ -1,7 +1,6 @@
 package io.forus.me.android.presentation.view.screens.records.categories
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,12 @@ import io.forus.me.android.presentation.internal.Injection
 import io.forus.me.android.presentation.view.fragment.ToolbarLRFragment
 import io.forus.me.android.presentation.view.screens.records.list.RecordsAdapter
 import kotlinx.android.synthetic.main.fragment_record_categories.*
-import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import io.forus.me.android.presentation.view.component.dividers.FDividerItemDecoration
 import io.forus.me.android.presentation.view.screens.records.categories.RecordCategoriesPresenter
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
 
 
 class RecordCategoriesFragment : ToolbarLRFragment<RecordCategoriesModel, RecordCategoriesView, RecordCategoriesPresenter>(), RecordCategoriesView {

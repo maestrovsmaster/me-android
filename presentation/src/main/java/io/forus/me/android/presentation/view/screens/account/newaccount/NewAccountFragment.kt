@@ -1,12 +1,12 @@
 package io.forus.me.android.presentation.view.screens.account.newaccount
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.snackbar.Snackbar
 import io.forus.me.android.presentation.view.base.lr.LRViewState
 import io.forus.me.android.presentation.view.base.lr.LoadRefreshPanel
 import io.forus.me.android.domain.exception.RetrofitException
@@ -130,7 +130,7 @@ class NewAccountFragment : ToolbarLRFragment<NewAccountModel, NewAccountView, Ne
 
         if (vs.closeScreen && vs.model.isSuccess != null && vs.model.isSuccess) {
 
-            navigator.navigateToCheckEmail(context!!)
+            navigator.navigateToCheckEmail(requireContext())
             activity?.finish()
 
         }

@@ -1,8 +1,9 @@
 package io.forus.me.android.presentation.view.screens.assets
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.domain.models.assets.Asset
 
 class AssetsAdapter : RecyclerView.Adapter<AssetsVH>() {

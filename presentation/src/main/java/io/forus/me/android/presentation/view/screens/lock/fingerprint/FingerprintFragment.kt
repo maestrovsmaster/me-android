@@ -69,7 +69,7 @@ class FingerprintFragment : ToolbarLRFragment<FingerprintModel, FingerprintView,
         val errorNoFingerprints = resources.getString(R.string.lock_fingerprint_error_no_fingerprints)
         val errorBelowMarshmallow = resources.getString(R.string.lock_fingerprint_error_below_marshmallow)
 
-        mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(context!!, object: FingerPrintAuthCallback {
+        mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(requireContext(), object: FingerPrintAuthCallback {
             override fun onNoFingerPrintHardwareFound() {
                 authFail.onNext(errorHwNotFound)
             }

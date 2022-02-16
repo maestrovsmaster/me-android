@@ -1,7 +1,6 @@
 package io.forus.me.android.presentation.view.base.lr
 
-import android.support.annotation.CallSuper
-import android.support.design.widget.Snackbar
+
 import android.view.View
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import com.hannesdorfmann.mosby3.mvi.MviFragment
@@ -13,9 +12,11 @@ import io.forus.me.android.presentation.helpers.OnCompleteListener
 import io.forus.me.android.presentation.navigation.Navigator
 
 import android.R.id.message
-import android.support.annotation.NonNull
+import androidx.annotation.CallSuper
+
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import io.forus.me.android.presentation.view.base.lr.LRFragment
 import io.forus.me.android.presentation.view.screens.account.account.dialogs.SessionExpiredDialog
 import io.forus.me.android.presentation.view.screens.qr.dialogs.ScanVoucherNotEligibleDialog
@@ -70,7 +71,7 @@ abstract class LRFragment<M, V : LRView<M>, P : MviBasePresenter<V, LRViewState<
             //401 Unauthorized
             if (vs.refreshingError.message != null && vs.refreshingError.message!!.contains("401 ")) {
                 if (context != null) {
-                    SessionExpiredDialog(context!!, MaterialDialog.SingleButtonCallback { _, _ ->
+                    SessionExpiredDialog(requireContext(), MaterialDialog.SingleButtonCallback { _, _ ->
                         //navigator.navigateToWelcomeScreen(activity)
                         navigator.navigateToLoginSignUp(activity)
 
@@ -80,7 +81,7 @@ abstract class LRFragment<M, V : LRView<M>, P : MviBasePresenter<V, LRViewState<
 
             } else 
             if (vs.refreshingError is RetrofitException && vs.refreshingError.kind == io.forus.me.android.domain.exception.RetrofitException.Kind.NETWORK) {
-                if (context != null) NoInternetDialog(context!!, {}).show();
+                if (context != null) NoInternetDialog(requireContext(), {}).show();
             } else 
             {
                 Snackbar.make(viewForSnackbar(), R.string.app_refreshing_error_text, Snackbar.LENGTH_SHORT).show()

@@ -6,15 +6,13 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.StrictMode
-import android.support.multidex.MultiDex
 import android.util.Log
-import com.crashlytics.android.Crashlytics
+import androidx.multidex.MultiDex
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import io.fabric.sdk.android.Fabric
 import io.forus.me.android.data.net.MeServiceFactory
 import io.forus.me.android.presentation.api_config.ApiConfig
 import io.forus.me.android.presentation.internal.Injection
@@ -73,7 +71,7 @@ class AndroidApplication : Application() {
     }
 
     private fun initFabric() {
-        Fabric.with(this, Crashlytics())
+       // Fabric.with(this, Crashlytics())
     }
 
     private fun initRetrofit() {

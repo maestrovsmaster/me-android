@@ -1,20 +1,23 @@
 package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v4.text.HtmlCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import io.forus.me.android.domain.models.vouchers.ProductAction
 import io.forus.me.android.domain.models.vouchers.VoucherProvider
 import io.forus.me.android.presentation.R
@@ -178,7 +181,7 @@ class ActionsActivity : AppCompatActivity() {
 
                 if(canWork) {
                     canWork = false
-                    val tv = view as android.support.v7.widget.AppCompatTextView
+                    val tv = view as io.forus.me.android.presentation.view.component.text.TextView
                     val orgName = tv.text.toString()
 
                     val id = mainViewModel.selectedOrgIdByName(orgName)

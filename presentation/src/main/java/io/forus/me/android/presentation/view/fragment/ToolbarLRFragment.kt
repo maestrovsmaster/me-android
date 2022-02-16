@@ -1,11 +1,11 @@
 package io.forus.me.android.presentation.view.fragment
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import kotlinx.android.synthetic.main.toolbar_view.*
 import io.forus.me.android.presentation.view.base.lr.LRFragment
@@ -63,11 +63,11 @@ abstract class ToolbarLRFragment<M, V : LRView<M>, P : MviBasePresenter<V, LRVie
 
         setToolbarTitle(toolbarTitle)
         if (toolbarType == ToolbarType.Small){
-            toolbar_title.setPadding(toolbar_title.paddingLeft, Converter.convertDpToPixel(5f, activity!!.applicationContext), toolbar_title.paddingRight, 0)
+            toolbar_title.setPadding(toolbar_title.paddingLeft, Converter.convertDpToPixel(5f, requireContext().applicationContext), toolbar_title.paddingRight, 0)
         }
 
 
-        val castActivity = activity!!
+        val castActivity = requireActivity()
         when (castActivity){
             is AppCompatActivity -> setActionBarActivity(castActivity)
 

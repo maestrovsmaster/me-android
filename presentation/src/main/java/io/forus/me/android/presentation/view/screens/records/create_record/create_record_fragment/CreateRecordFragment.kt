@@ -3,7 +3,6 @@ package io.forus.me.android.presentation.view.screens.records.create_record.crea
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_create_record.*
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import androidx.fragment.app.Fragment
 
 
 /**

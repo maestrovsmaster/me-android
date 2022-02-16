@@ -1,14 +1,15 @@
-package com.example.snackbarexample.customsnackbar.chef
+package io.forus.me.android.presentation.view.component.snackbar
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.design.snackbar.ContentViewCallback
+
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.snackbar.ContentViewCallback
 import io.forus.me.android.presentation.R
 import kotlinx.android.synthetic.main.view_snackbar_update_app.view.*
 

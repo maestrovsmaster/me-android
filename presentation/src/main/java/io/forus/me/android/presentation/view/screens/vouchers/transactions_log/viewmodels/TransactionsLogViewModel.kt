@@ -1,8 +1,9 @@
 package io.forus.me.android.presentation.view.screens.vouchers.transactions_log.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.forus.me.android.domain.models.vouchers.Transaction
 import io.forus.me.android.domain.repository.vouchers.VouchersRepository
 import io.forus.me.android.presentation.internal.Injection

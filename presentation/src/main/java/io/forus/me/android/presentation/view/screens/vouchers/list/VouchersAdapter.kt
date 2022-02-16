@@ -1,16 +1,10 @@
 package io.forus.me.android.presentation.view.screens.vouchers.list
 
-import android.support.v4.view.ViewCompat
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import io.forus.me.android.presentation.R.id.name
-import io.forus.me.android.presentation.R.id.value
-import io.forus.me.android.presentation.R.id.voucher_card
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.presentation.models.vouchers.Voucher
-import io.forus.me.android.presentation.view.screens.vouchers.item.VoucherFragment
-import kotlinx.android.synthetic.main.fragment_voucher.*
 import kotlinx.android.synthetic.main.item_vouchers_list.view.*
 
 class VouchersAdapter : RecyclerView.Adapter<VouchersVH>() {

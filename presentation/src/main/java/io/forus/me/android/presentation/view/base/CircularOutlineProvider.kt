@@ -18,9 +18,9 @@ package io.forus.me.android.presentation.view.base
 
 import android.graphics.Outline
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.view.View
 import android.view.ViewOutlineProvider
+import androidx.annotation.RequiresApi
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 object CircularOutlineProvider : ViewOutlineProvider() {

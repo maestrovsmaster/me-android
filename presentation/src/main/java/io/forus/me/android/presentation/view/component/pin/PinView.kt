@@ -1,7 +1,6 @@
 package io.forus.me.android.presentation.view.component.pin
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import io.forus.me.android.presentation.R
 import android.view.LayoutInflater
@@ -15,6 +14,7 @@ import android.R.attr.gravity
 import android.graphics.Color
 import android.util.TypedValue
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import io.forus.me.android.presentation.view.component.FontType
 
 

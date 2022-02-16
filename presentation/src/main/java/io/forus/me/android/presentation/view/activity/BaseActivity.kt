@@ -5,21 +5,15 @@ package io.forus.me.android.presentation.view.activity
 //import io.forus.me.android.presentation.internal.di.modules.ActivityModule;
 
 import android.content.Context
-import android.support.transition.ChangeBounds
-import android.support.transition.ChangeClipBounds
-import android.support.transition.ChangeTransform
-import android.support.transition.Explode
-import android.support.transition.Fade
-import android.support.transition.Slide
-import android.support.transition.Transition
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionSet
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
-import android.support.v7.app.AppCompatActivity
-import android.view.Gravity
+
+
+
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.transition.Explode
+import androidx.transition.Fade
 import io.forus.me.android.presentation.helpers.SystemServices
 import io.forus.me.android.presentation.navigation.Navigator
 

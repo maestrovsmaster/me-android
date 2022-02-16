@@ -2,10 +2,7 @@ package io.forus.me.android.presentation.view.screens.qr.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
+
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -14,6 +11,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import io.forus.me.android.presentation.R;
 
@@ -26,7 +28,7 @@ public class ConfirmLoginDeviceDialog extends DialogFragment {
 
     public SubmitClickListener submitClickListener;
 
-    public static ConfirmLoginDeviceDialog display(FragmentManager fragmentManager,SubmitClickListener submitClickListener) {
+    public static ConfirmLoginDeviceDialog display(FragmentManager fragmentManager, SubmitClickListener submitClickListener) {
         ConfirmLoginDeviceDialog dialog = new ConfirmLoginDeviceDialog();
 
         dialog.submitClickListener = submitClickListener;

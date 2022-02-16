@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatButton
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.helpers.FontCache
 import io.forus.me.android.presentation.view.component.FontType
@@ -34,7 +35,7 @@ class QrButton : FrameLayout {
     private fun init(context: Context,  attrs: AttributeSet?) {
         val inflater = LayoutInflater.from(context)
         val mRootView = inflater.inflate(layout, this)
-        val btn_qr = mRootView.findViewById<android.support.v7.widget.AppCompatButton>(R.id.qr_click)
+        val btn_qr = mRootView.findViewById<AppCompatButton>(R.id.qr_click)
 
         val fontType = FontType.Regular
         btn_qr.typeface = FontCache.getTypeface(fontType.getFontPath(), context)

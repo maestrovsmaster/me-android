@@ -1,9 +1,9 @@
-package com.example.customsnackbar.extension
+package io.forus.me.android.presentation.view.component.extension
 
-import android.support.design.widget.CoordinatorLayout
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 internal fun View?.findSuitableParent(): ViewGroup? {
     var view = this

@@ -6,13 +6,12 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.crashlytics.android.Crashlytics
+import androidx.fragment.app.Fragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -20,7 +19,6 @@ import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
-import io.fabric.sdk.android.Fabric
 import io.forus.me.android.data.executor.JobExecutor
 import io.forus.me.android.domain.interactor.CheckLoginUseCase
 import io.forus.me.android.domain.interactor.CheckSendCrashReportsEnabled
@@ -38,7 +36,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DashboardActivity : SlidingPanelActivity(), DashboardContract.View {
 
-    private var currentFragment: android.support.v4.app.Fragment? = null
+    private var currentFragment: Fragment? = null
     private var menu: Menu? = null
 
     private var settings = Injection.instance.settingsDataSource
@@ -81,9 +79,9 @@ class DashboardActivity : SlidingPanelActivity(), DashboardContract.View {
     }
 
     override fun addUserId(id: String) {
-        if (Fabric.isInitialized()) {
+        /*if (Fabric.isInitialized()) {
             Crashlytics.setUserIdentifier(id)
-        }
+        }*/
     }
 
     override fun logout() {
@@ -100,7 +98,7 @@ class DashboardActivity : SlidingPanelActivity(), DashboardContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return currentFragment?.onOptionsItemSelected(item) ?: false
+        return currentFragment?.onOptionsItemSelected(item!!) ?: false
     }
 
     override fun onDestroy() {

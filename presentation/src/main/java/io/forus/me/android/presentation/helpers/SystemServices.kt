@@ -4,14 +4,14 @@ package io.forus.me.android.presentation.helpers
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.content.Context
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.CancellationSignal
 import android.os.Handler
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
-import android.support.v7.app.AlertDialog
+
 import io.forus.me.android.presentation.BuildConfig
 import io.forus.me.android.presentation.R
 

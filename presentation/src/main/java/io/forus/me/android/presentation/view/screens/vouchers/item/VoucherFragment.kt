@@ -5,13 +5,15 @@ import android.content.Intent
 import android.graphics.BlurMaskFilter
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
+
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -83,7 +85,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
     private var map: GoogleMap? = null
     private var organizationLatLng: LatLng? = null
     private val sendEmailDialog: AlertDialog.Builder by lazy(LazyThreadSafetyMode.NONE) {
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(requireContext())
                 .setTitle(R.string.send_voucher_email_dialog_title)
                 .setPositiveButton(R.string.send_voucher_email_dialog_positive_button) { _, _ ->
                     sendEmailDialogShows.onNext(true)
@@ -299,7 +301,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
                     shopkeeper_email.visibility = if ((organization.email
                                     ?: "").isNotEmpty()) View.VISIBLE else View.GONE
 
-                    Glide.with(this)
+                    Glide.with(requireActivity())
                             .load(organization.logo)
                             .fitCenter()
                             .into(shopkeeper_logo)
@@ -316,7 +318,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
                 val myOffices = mutableListOf<Office>()
                 myOffices.addAll(officesList)
                 if (myOffices.isNotEmpty()) {
-                    val officesAdapter = OfficesAdapter(myOffices, context!!)
+                    val officesAdapter = OfficesAdapter(myOffices, requireContext())
                     officesAdapter.showMapCallback = object : OfficesAdapter.ShowMapCallback {
                         override fun showMap(office: Office) {
                             if (office.lat != null && office.lon != null) {
@@ -449,9 +451,9 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
                     showEmailSendDialog()
                 }
                 EmailSend.SENT -> {
-                    FullscreenDialog.display(fragmentManager, context!!.resources.getString(R.string.voucher_send_email_success),
-                            context!!.resources.getString(R.string.voucher_send_email_description),
-                            context!!.resources.getString(R.string.me_ok)) {
+                    FullscreenDialog.display(fragmentManager, requireContext().resources.getString(R.string.voucher_send_email_success),
+                            requireContext().resources.getString(R.string.voucher_send_email_description),
+                            requireContext().resources.getString(R.string.me_ok)) {
                         sentEmailDialogShown.onNext(Unit)
                     }
                 }
@@ -467,7 +469,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
         val gmmIntentUri = Uri.parse("geo:${lat.toString()},${lon.toString()}")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
-        if (mapIntent.resolveActivity(context!!.packageManager) != null) {
+        if (mapIntent.resolveActivity(requireContext().packageManager) != null) {
             startActivity(mapIntent)
         }
     }

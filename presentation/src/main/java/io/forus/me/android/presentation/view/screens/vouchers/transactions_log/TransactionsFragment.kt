@@ -1,15 +1,18 @@
 package io.forus.me.android.presentation.view.screens.vouchers.transactions_log
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+
 import android.os.Bundle
-import android.support.annotation.Nullable
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.forus.me.android.domain.models.vouchers.Transaction
 import io.forus.me.android.presentation.R
@@ -63,14 +66,18 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                               @Nullable savedInstanceState: Bundle?): View? {
 
 
-        val viewRoot = LayoutInflater.from(context!!).inflate(R.layout.activity_transactions_log, null)
+        val viewRoot = LayoutInflater.from(requireContext()).inflate(R.layout.activity_transactions_log, null)
         binding = ActivityTransactionsLogBinding.bind(viewRoot)
         val view = binding.root
 
         return view
     }
 
-
+   /* private val mainViewModel by lazy {
+        ViewModelProvider(this).get(TransactionsLogViewModel::class.java).apply {
+            lifecycle.addObserver(this)
+        }
+    }*/
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,7 +94,7 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         info_button.visibility = View.INVISIBLE
         profile_button.setImageResource(R.drawable.ic_back)
         toolbar_title.text = getString(R.string.transactions_title)
-        profile_button.setOnClickListener { activity!!.finish() }
+        profile_button.setOnClickListener { requireActivity().finish() }
 
         transactionsAdapter = TransactionsLogAdapter(requireContext(),arrayListOf(), object : TransactionsLogAdapter.Callback {
             override fun onItemClicked(item: Transaction) {
@@ -98,12 +105,12 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         })
 
 
-        val llm = LinearLayoutManager(context!!)
+        val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.VERTICAL
         recycler.layoutManager = llm
         recycler.adapter = transactionsAdapter
 
-        mainViewModel.transactionsLiveData.observe(this, Observer {
+        mainViewModel.transactionsLiveData.observe(viewLifecycleOwner) {
             if (it != null) {
                 canWork = true
                 if (mustReplaceTransactionsList) transactionsAdapter!!.clearAll()
@@ -112,7 +119,7 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     this@TransactionsFragment.currentPage = 1
                 }
             }
-        })
+        }
 
 
         buttonDatePicker.setOnClickListener {
@@ -123,11 +130,11 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     mainViewModel.calendarFrom.value!!.get(Calendar.MONTH),
                     mainViewModel.calendarFrom.value!!.get(Calendar.DAY_OF_MONTH)
             )
-            dpd.show(activity!!.fragmentManager, "Datepickerdialog")
+            dpd.show(requireActivity().fragmentManager, "Datepickerdialog")
 
         }
 
-        val linearLayoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = linearLayoutManager
         recycler.adapter = transactionsAdapter
 

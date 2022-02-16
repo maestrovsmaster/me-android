@@ -1,9 +1,7 @@
 package io.forus.me.android.presentation.view.screens.records.categories
 
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
-import android.widget.CompoundButton
+import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.domain.models.records.RecordCategory
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.helpers.inflate

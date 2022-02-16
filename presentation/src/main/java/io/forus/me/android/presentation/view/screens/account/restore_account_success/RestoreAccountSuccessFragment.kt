@@ -120,7 +120,7 @@ class RestoreAccountSuccessFragment : ToolbarLRFragment<RestoreAccountSuccessMod
 
             if (vs.model.sendingRestoreByEmailSuccess == true && !instructionsAlreadyShown) {
 
-                navigator.navigateToCheckEmail(context!!)
+                navigator.navigateToCheckEmail(requireContext())
             }
 
             if (vs.model.sendingRestoreByEmail == true) {

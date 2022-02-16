@@ -1,10 +1,11 @@
 package io.forus.me.android.presentation.view.screens.about
 
+
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import io.forus.me.android.presentation.R
 import kotlinx.android.synthetic.main.fragment_about_me.*
 

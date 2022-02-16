@@ -1,8 +1,8 @@
 package io.forus.me.android.presentation.view.screens.records.item.validations
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 
 
 class ValidationAdapter(private val clickListener: ((ValidationViewModel) -> Unit)?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
