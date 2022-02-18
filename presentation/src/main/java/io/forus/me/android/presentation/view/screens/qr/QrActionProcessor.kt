@@ -14,6 +14,7 @@ import io.forus.me.android.presentation.internal.Injection
 import io.forus.me.android.presentation.models.vouchers.FundType
 import io.forus.me.android.presentation.navigation.Navigator
 import io.forus.me.android.presentation.view.base.NoInternetDialog
+import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.qr.dialogs.*
 import io.forus.me.android.presentation.view.screens.records.create_record.dialog.CreateRecordSuccessDialog
 import io.forus.me.android.presentation.view.screens.records.dialogs.validators_list_dialog.ValidatorsListDialog
@@ -223,7 +224,8 @@ class QrActionProcessor(private val scanner: QrScannerActivity,
         if (false and settingsDataSource.isPinEnabled()) {
             // Database will be opened later
             val useFingerprint = settingsDataSource.isFingerprintEnabled()
-            navigator.navigateToCheckTransactionPin(scanner, ProviderActivity.getCallingIntent(scanner, address), useFingerprint)
+            //navigator.navigateToCheckTransactionPin(scanner, ProviderActivity.getCallingIntent(scanner, address), useFingerprint)
+            navigator.navigateToCheckTransactionPin(scanner, ProviderV2Activity.getCallingIntent(scanner, address), useFingerprint)
             (android.os.Handler()).postDelayed({
                 reactivateDecoding()
             }, 1000)

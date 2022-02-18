@@ -24,6 +24,7 @@ import io.forus.me.android.presentation.view.screens.account.restore_account_suc
 import io.forus.me.android.presentation.view.screens.account.send_crash_reports.SendReportsActivity
 import io.forus.me.android.presentation.view.screens.dashboard.DashboardActivity
 import io.forus.me.android.presentation.view.screens.lock.PinLockActivity
+import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.qr.QrScannerActivity
 import io.forus.me.android.presentation.view.screens.records.item.RecordDetailsActivity
 import io.forus.me.android.presentation.view.screens.records.list.RecordsActivity
@@ -235,7 +236,8 @@ constructor()//empty
 
     fun navigateToVoucherProvider(context: Context?, voucherAddress: String,  isDemoVoucher: Boolean? = false) {
         if (context != null) {
-            val intentToLaunch = ProviderActivity.getCallingIntent(context, voucherAddress,isDemoVoucher)
+            //val intentToLaunch = ProviderActivity.getCallingIntent(context, voucherAddress,isDemoVoucher)
+            val intentToLaunch = ProviderV2Activity.getCallingIntent(context, voucherAddress,isDemoVoucher)
             context.startActivity(intentToLaunch)
         }
     }

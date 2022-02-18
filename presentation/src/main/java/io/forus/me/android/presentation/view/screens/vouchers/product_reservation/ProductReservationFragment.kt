@@ -16,6 +16,7 @@ import io.forus.me.android.presentation.models.vouchers.Voucher
 import io.forus.me.android.presentation.view.activity.BaseActivity
 import io.forus.me.android.presentation.view.base.lr.LRViewState
 import io.forus.me.android.presentation.view.fragment.ToolbarLRFragment
+import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.vouchers.item.VoucherFragment
 import io.forus.me.android.presentation.view.screens.vouchers.list.VouchersAdapter
 import io.forus.me.android.presentation.view.screens.vouchers.list.VouchersFragment
@@ -74,7 +75,8 @@ class ProductReservationFragment : ToolbarLRFragment<ProductReservationModel, Pr
 
         adapter.clickListener = { voucher: Voucher, sharedViews: List<View>, position: Int ->
             if(context != null ) {
-                val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
+                //val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
+                val intentToLaunch = ProviderV2Activity.getCallingIntent(requireContext(), voucher.address!!)
                 requireContext().startActivity(intentToLaunch)
             }
         }
