@@ -19,6 +19,7 @@ import io.forus.me.android.presentation.BuildConfig
 import io.forus.me.android.presentation.api_config.ApiConfig
 import io.forus.me.android.presentation.api_config.ApiType
 import io.forus.me.android.presentation.helpers.SharedPref
+import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 
 
 /**
@@ -68,7 +69,8 @@ class MainActivity : BaseActivity() {
             if (locked) {
                 navigateToPinlock()
             } else {
-                navigateToDashboard()
+                //navigateToDashboard()
+                startActivity(ProviderV2Activity.getCallingIntent(this@MainActivity,"0xbc0425b504457b2c071537515282dff196b8d1be", false))
             }
         } else {
             //navigateToWelcomeScreen() //old behavior

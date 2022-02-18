@@ -11,8 +11,12 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
 
-    dataBinding {
+   /* dataBinding {
         enabled = true
+    }*/
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
 
     def globalConfiguration = rootProject.extensions.getByName("ext")

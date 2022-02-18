@@ -9,6 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.view.activity.CommonActivity
+import io.forus.me.android.presentation.view.screens.vouchers.provider.ProviderActivity
 import kotlinx.android.synthetic.main.activity_create_category_flow.*
 
 class ProviderV2Activity :  AppCompatActivity() {
@@ -38,6 +39,10 @@ class ProviderV2Activity :  AppCompatActivity() {
         setContentView(R.layout.activity_provider2)
 
         Log.d("ProviderV2Activity","welcome ProviderV2Activity")
+
+        val voucherAddress = intent.getStringExtra(ProviderActivity.VOUCHER_ADDRESS_EXTRA)
+
+        Log.d("ProviderV2Activity","voucherAddress = $voucherAddress")
 
        /* val navOptions = NavOptions.Builder()
             .setEnterAnim(R.anim.nav_default_enter_anim)
