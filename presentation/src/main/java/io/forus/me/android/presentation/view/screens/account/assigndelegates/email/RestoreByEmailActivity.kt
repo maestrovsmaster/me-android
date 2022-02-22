@@ -47,6 +47,6 @@ class RestoreByEmailActivity : CommonActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        fragment.exchangeToken(intent.getStringExtra(TOKEN_EXTRA))
+        fragment.exchangeToken(intent.getStringExtra(TOKEN_EXTRA)!!)
     }
 }

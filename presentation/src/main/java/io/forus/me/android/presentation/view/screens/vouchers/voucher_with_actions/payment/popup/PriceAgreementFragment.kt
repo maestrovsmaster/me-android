@@ -2,13 +2,11 @@ package io.forus.me.android.presentation.view.screens.vouchers.voucher_with_acti
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import io.forus.me.android.presentation.R
-import io.forus.me.android.presentation.databinding.FragmentActionPaymentBinding
 import io.forus.me.android.presentation.databinding.FragmentPriceAgreementBinding
 import io.forus.me.android.presentation.view.fragment.BaseFragment
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentFragment
@@ -19,7 +17,13 @@ import kotlinx.android.synthetic.main.fragment_popup_qr.*
 
 class PriceAgreementFragment : BaseFragment() {
 
-    lateinit var mainViewModel: PriceAgreementViewModel
+    //lateinit var mainViewModel: PriceAgreementViewModel
+
+    private val mainViewModel: PriceAgreementViewModel by lazy {
+        ViewModelProvider(this).get(PriceAgreementViewModel::class.java).apply {
+            // lifecycle.addObserver(this)
+        }
+    }
 
     lateinit var binding: FragmentPriceAgreementBinding//ActivityActionPaymentBinding
 
@@ -64,7 +68,7 @@ class PriceAgreementFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel = ViewModelProviders.of(this).get(PriceAgreementViewModel::class.java)
+      //  mainViewModel = ViewModelProviders.of(this).get(PriceAgreementViewModel::class.java)
 
         product.let {
             mainViewModel.setProduct(it!!)

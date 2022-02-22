@@ -50,7 +50,7 @@ class ActionPaymentActivity : BaseActivity() {
         setContentView(R.layout.activity_action_payment)
 
         val intent = this.intent
-        intent.extras.let {
+        intent.extras?.let {
             product = it.getSerializable(ACTION_PRODUCT_EXTRA) as ProductSerializable
             voucherAddress = intent.getSerializableExtra(ActionsActivity.VOUCHER_ADDRESS_EXTRA) as String
 

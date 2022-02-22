@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.forus.me.android.presentation.R
@@ -21,6 +21,7 @@ import io.forus.me.android.presentation.view.fragment.BaseFragment
 import io.forus.me.android.presentation.view.screens.vouchers.dialogs.ApplyActionTransactionDialog
 import io.forus.me.android.presentation.view.screens.vouchers.dialogs.FullscreenDialog
 import io.forus.me.android.presentation.view.screens.vouchers.dialogs.ThrowableErrorDialog
+import io.forus.me.android.presentation.view.screens.vouchers.transactions_log.viewmodels.TransactionsLogViewModel
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.popup.PriceAgreementFragment
 import kotlinx.android.synthetic.main.fragment_action_payment.*
 import java.math.BigDecimal
@@ -47,7 +48,13 @@ class ActionPaymentFragment : BaseFragment() {
     }
 
 
-    lateinit var mainViewModel: ActionPaymentViewModel
+    //lateinit var mainViewModel: ActionPaymentViewModel
+
+    private val mainViewModel: ActionPaymentViewModel by lazy {
+        ViewModelProvider(this).get(ActionPaymentViewModel::class.java).apply {
+            // lifecycle.addObserver(this)
+        }
+    }
 
     lateinit var binding: FragmentActionPaymentBinding//ActivityActionPaymentBinding
 
@@ -83,7 +90,7 @@ class ActionPaymentFragment : BaseFragment() {
 
             }
 
-            mainViewModel = ViewModelProviders.of(this).get(ActionPaymentViewModel::class.java)
+            //mainViewModel = ViewModelProviders.of(this).get(ActionPaymentViewModel::class.java)
 
             product.let {
                 mainViewModel.setProduct(it!!)

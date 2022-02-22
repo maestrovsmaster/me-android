@@ -33,7 +33,7 @@ class ProductReservationActivity : CommonActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val fragment = ProductReservationFragment.newIntent(intent.getStringExtra(VOUCHER_ADDRESS_EXTRA), intent.getBooleanExtra(SHOW_PARENT_VOUCHER, false));
+            val fragment = ProductReservationFragment.newIntent(intent.getStringExtra(VOUCHER_ADDRESS_EXTRA)!!, intent.getBooleanExtra(SHOW_PARENT_VOUCHER, false));
 
             addFragment(R.id.fragmentContainer, fragment)
         }

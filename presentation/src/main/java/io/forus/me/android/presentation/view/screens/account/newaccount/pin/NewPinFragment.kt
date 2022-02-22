@@ -56,7 +56,7 @@ class NewPinFragment : ToolbarLRFragment<NewPinModel, NewPinView, NewPinPresente
         val view = inflater.inflate(R.layout.fragment_account_set_pin, container, false)
         val bundle = this.arguments
         if (bundle != null) {
-            accessToken = bundle.getString(ACCESS_TOKEN_EXTRA)
+            accessToken = bundle.getString(ACCESS_TOKEN_EXTRA)!!
         }
         return view
     }

@@ -40,7 +40,7 @@ class VoucherActivity : SlidingPanelActivity() {
         val voucher = intent.getParcelableExtra<Voucher>(VOUCHER_EXTRA)
         if (savedInstanceState == null) {
             fragment = when (voucher) {
-                null -> VoucherFragment.newInstance(intent.getStringExtra(ID_EXTRA))
+                null -> VoucherFragment.newInstance(intent.getStringExtra(ID_EXTRA)!!)!!
                 else -> VoucherFragment.newInstance(voucher)
             }
 

@@ -86,7 +86,7 @@ class RecordsFragment : ToolbarLRFragment<RecordsModel, RecordsView, RecordsPres
         val bundle = this.arguments
         if (bundle != null) {
             recordCategoryId = bundle.getLong(CATEGORY_ID_EXTRA)
-            recordCategoryName = bundle.getString(CATEGORY_NAME_EXTRA)
+            recordCategoryName = bundle.getString(CATEGORY_NAME_EXTRA)!!
         }
         return view
     }

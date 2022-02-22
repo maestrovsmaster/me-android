@@ -32,7 +32,7 @@ class ProviderActivity : CommonActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val fragment = ProviderFragment.newIntent(intent.getStringExtra(VOUCHER_ADDRESS_EXTRA), intent.getBooleanExtra(IS_DEMO_VOUCHER, false))
+            val fragment = ProviderFragment.newIntent(intent.getStringExtra(VOUCHER_ADDRESS_EXTRA)!!, intent.getBooleanExtra(IS_DEMO_VOUCHER, false))
 
             addFragment(R.id.fragmentContainer, fragment)
         }

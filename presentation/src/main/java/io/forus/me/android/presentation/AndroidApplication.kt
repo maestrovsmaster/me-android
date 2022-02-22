@@ -108,8 +108,9 @@ class AndroidApplication : Application() {
             override fun onActivityPaused(activity: Activity) {}
 
             override fun onActivityStopped(activity: Activity) {}
+            override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) { }
 
-            override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle?) {}
+
 
             override fun onActivityDestroyed(activity: Activity) {}
         })

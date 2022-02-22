@@ -5,9 +5,9 @@ import android.os.Parcelable
 
 class VoucherProvider(var voucher: Voucher, var allowedOrganizations: List<Organization>, var allowedProductCategories: List<ProductCategory>) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readParcelable(Voucher::class.java.classLoader),
-            parcel.createTypedArrayList(Organization),
-            parcel.createTypedArrayList(ProductCategory)) {
+            parcel.readParcelable(Voucher::class.java.classLoader)!!,
+            parcel.createTypedArrayList(Organization)!!,
+            parcel.createTypedArrayList(ProductCategory)!!) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

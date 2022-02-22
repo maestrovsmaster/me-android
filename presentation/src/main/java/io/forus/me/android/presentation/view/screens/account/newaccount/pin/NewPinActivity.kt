@@ -27,7 +27,7 @@ class NewPinActivity : CommonActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val fragment = NewPinFragment.newIntent(intent.getStringExtra(ACCESS_TOKEN_EXTRA))
+            val fragment = NewPinFragment.newIntent(intent.getStringExtra(ACCESS_TOKEN_EXTRA)!!)
             addFragment(R.id.fragmentContainer, fragment)
         }
     }

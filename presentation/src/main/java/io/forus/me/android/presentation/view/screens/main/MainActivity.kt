@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import io.forus.me.android.presentation.internal.Injection
 import io.forus.me.android.presentation.view.activity.BaseActivity
 import com.google.android.gms.common.ConnectionResult
@@ -69,8 +70,11 @@ class MainActivity : BaseActivity() {
             if (locked) {
                 navigateToPinlock()
             } else {
-                //navigateToDashboard()
-                startActivity(ProviderV2Activity.getCallingIntent(this@MainActivity,"0xbc0425b504457b2c071537515282dff196b8d1be", false))
+                navigateToDashboard()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(ProviderV2Activity.getCallingIntent(this@MainActivity,"0xbc0425b504457b2c071537515282dff196b8d1be", false))
+                },500)
+
             }
         } else {
             //navigateToWelcomeScreen() //old behavior

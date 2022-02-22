@@ -27,7 +27,7 @@ class ChangePinActivity : CommonActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val fragment = ChangePinFragment.newIntent(ChangePinMode.valueOf(intent.getStringExtra(MODE_EXTRA)))
+            val fragment = ChangePinFragment.newIntent(ChangePinMode.valueOf(intent.getStringExtra(MODE_EXTRA)!!))
             addFragment(R.id.fragmentContainer, fragment)
         }
     }

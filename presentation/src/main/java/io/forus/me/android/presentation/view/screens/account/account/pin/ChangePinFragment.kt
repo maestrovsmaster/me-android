@@ -59,7 +59,7 @@ class ChangePinFragment : ToolbarLRFragment<ChangePinModel, ChangePinView, Chang
 
         val bundle = this.arguments
         if (bundle != null) {
-            mode = ChangePinMode.valueOf(bundle.getString(MODE_EXTRA))
+            mode = ChangePinMode.valueOf(bundle.getString(MODE_EXTRA)!!)
         }
     }
 

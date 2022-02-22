@@ -17,12 +17,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import io.forus.me.android.domain.models.vouchers.ProductAction
 import io.forus.me.android.domain.models.vouchers.VoucherProvider
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.databinding.ActivityActionsBinding
 import io.forus.me.android.presentation.helpers.PaginationScrollListener
+import io.forus.me.android.presentation.view.screens.vouchers.transactions_log.viewmodels.TransactionsLogViewModel
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.adapter.ActionsAdapter
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.model.ActionsViewModel
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentActivity
@@ -50,7 +51,13 @@ class ActionsActivity : AppCompatActivity() {
 
     var voucherAddress: String? = null
 
-    lateinit var mainViewModel: ActionsViewModel
+    //lateinit var mainViewModel: ActionsViewModel
+
+    private val mainViewModel: ActionsViewModel by lazy {
+        ViewModelProvider(this).get(ActionsViewModel::class.java).apply {
+            // lifecycle.addObserver(this)
+        }
+    }
 
     lateinit var binding: ActivityActionsBinding
 
@@ -68,7 +75,7 @@ class ActionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        mainViewModel = ViewModelProviders.of(this).get(ActionsViewModel::class.java)
+        //mainViewModel = ViewModelProviders.of(this).get(ActionsViewModel::class.java)
         voucherAddress = intent.getSerializableExtra(VOUCHER_ADDRESS_EXTRA) as String
         mainViewModel.voucherAddress = voucherAddress
         binding = DataBindingUtil.setContentView<ActivityActionsBinding>(this@ActionsActivity, R.layout.activity_actions)

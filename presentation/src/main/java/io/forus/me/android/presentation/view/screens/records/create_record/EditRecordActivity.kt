@@ -75,8 +75,8 @@ class EditRecordActivity : AppCompatActivity(), RecordTypesFragment.OnItemSelect
 
         if (savedInstanceState == null) {
             recordId = intent.getLongExtra(RECORD_ID,-1)
-            recordName = intent.getStringExtra(RECORD_TYPE)
-            recordValue = intent.getStringExtra(RECORD_VALUE)
+            recordName = intent.getStringExtra(RECORD_TYPE)!!
+            recordValue = intent.getStringExtra(RECORD_VALUE)!!
         }
 
 

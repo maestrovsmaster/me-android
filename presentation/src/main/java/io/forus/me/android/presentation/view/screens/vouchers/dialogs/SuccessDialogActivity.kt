@@ -37,9 +37,9 @@ class SuccessDialogActivity : AppCompatActivity() {
         setContentView(R.layout.dialog_fullscreen)
 
         if(intent != null) {
-            titleTxt = intent.getStringExtra(TITLE_EXTRA)
-            descriptionTxt = intent.getStringExtra(DESCRIPTION_EXTRA)
-            submitButtonText = intent.getStringExtra(SUBMIT_EXTRA)
+            titleTxt = intent.getStringExtra(TITLE_EXTRA)!!
+            descriptionTxt = intent.getStringExtra(DESCRIPTION_EXTRA)!!
+            submitButtonText = intent.getStringExtra(SUBMIT_EXTRA)!!
         }
 
 

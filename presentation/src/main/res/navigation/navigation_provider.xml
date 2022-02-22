@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation_provider">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_provider"
+    app:startDestination="@id/providerFragmentV2">
 
+    <fragment
+        android:id="@+id/providerFragmentV2"
+        android:name="io.forus.me.android.presentation.view.screens.provider_v2.provider_main.ProviderFragmentV2"
+        android:label="ProviderFragmentV2"
+        tools:layout="@layout/fragment_providerv2"
+        />
 </navigation>

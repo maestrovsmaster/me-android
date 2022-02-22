@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.forus.me.android.domain.models.vouchers.Transaction
@@ -47,7 +47,7 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     var mustReplaceTransactionsList = false
 
 
-    lateinit var mainViewModel: TransactionsLogViewModel
+
 
     lateinit var binding: ActivityTransactionsLogBinding
 
@@ -73,18 +73,18 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         return view
     }
 
-   /* private val mainViewModel by lazy {
+    private val mainViewModel:TransactionsLogViewModel by lazy {
         ViewModelProvider(this).get(TransactionsLogViewModel::class.java).apply {
-            lifecycle.addObserver(this)
+           // lifecycle.addObserver(this)
         }
-    }*/
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        mainViewModel = ViewModelProviders.of(this).get(TransactionsLogViewModel::class.java)
+        //mainViewModel = ViewModelProviders.of(this).get(TransactionsLogViewModel::class.java)
 
 
         binding.lifecycleOwner = this
