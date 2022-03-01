@@ -156,6 +156,10 @@ android {
             outputFileName = new File(newApkName)
         }
     }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 greendao {
@@ -181,10 +185,10 @@ dependencies {
     implementation project(':data')
 
     implementation 'com.android.support:support-v4:28.0.0'
-    annotationProcessor presentationDependencies.daggerCompiler
+   // annotationProcessor presentationDependencies.daggerCompiler
 
     implementation presentationDependencies.supportLib
-    implementation presentationDependencies.dagger
+   // implementation presentationDependencies.dagger
     implementation presentationDependencies.greendao
     implementation presentationDependencies.recyclerView
     implementation presentationDependencies.supportDesign
@@ -257,6 +261,32 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.8.0'
+    implementation 'moe.banana:moshi-jsonapi:3.5.0'
+    implementation 'moe.banana:moshi-jsonapi-retrofit-converter:3.5.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+
+
+    //dagger2
+    api 'com.google.dagger:dagger:2.24'
+    api 'com.google.dagger:dagger-android:2.35.1'
+    api 'com.google.dagger:dagger-android-support:2.24'
+
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.24'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
+
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.24'
+    kapt 'com.google.dagger:dagger-android-processor:2.24'
+
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
 
 
 

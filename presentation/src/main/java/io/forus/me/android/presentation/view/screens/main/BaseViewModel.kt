@@ -1,6 +1,7 @@
 package io.forus.me.android.presentation.view.screens.main
 
 import android.app.Application
+import android.content.Context
 import android.location.Location
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
@@ -9,20 +10,30 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import io.forus.me.android.domain.repository.vouchers.VouchersRepository
+import io.forus.me.android.presentation.api_data.RestApi
+import io.forus.me.android.presentation.api_data.repo.VouchersRepositoryV2
+import io.forus.me.android.presentation.internal.Injection
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 const val KEY_TOKEN_EXPIRED = "401"
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application),
     LifecycleObserver, Observable {
-   /* @Inject
+    @Inject
     lateinit var rest: RestApi
 
     @Inject
     lateinit var context: Context
 
-    @Inject
-    lateinit var repository: Repository*/
+   // @Inject
+    lateinit var repository: VouchersRepositoryV2
+
+
+
+
+
 
     protected val disposable = CompositeDisposable()
 
@@ -57,6 +68,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         isError.value = ""
         isSuccess.value = false
       //  (application as ALRDriver).appComponent.inject(this)
+
+        repository =  Injection.instance.vouchersRepositoryV2
     }
 
     fun onError(error: String) {

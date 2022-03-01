@@ -34,10 +34,13 @@ import io.forus.me.android.domain.repository.wallets.WalletsRepository
 import io.forus.me.android.presentation.api_config.ApiConfig
 import io.forus.me.android.presentation.BuildConfig
 import io.forus.me.android.presentation.DatabaseHelper
+import io.forus.me.android.presentation.api_data.RestApi
+import io.forus.me.android.presentation.api_data.repo.VouchersRepositoryV2
 import io.forus.me.android.presentation.helpers.AppSettings
 import io.forus.me.android.presentation.helpers.reactivex.AccessTokenChecker
 import io.forus.me.android.presentation.qr.QrDecoder
 import io.forus.me.android.presentation.helpers.fcm.FCMHandler
+import javax.inject.Inject
 
 class Injection private constructor() {
 
@@ -127,6 +130,12 @@ class Injection private constructor() {
 
     val vouchersRepository: VouchersRepository by lazy {
         return@lazy io.forus.me.android.data.repository.vouchers.VouchersRepository(vouchersDataSource)
+    }
+
+
+
+    val vouchersRepositoryV2: VouchersRepositoryV2 by lazy {
+        return@lazy VouchersRepositoryV2(applicationContext!!){MeServiceFactory.getInstance().createRetrofitService(RestApi::class.java, ApiConfig.SERVER_URL) }
     }
 
 

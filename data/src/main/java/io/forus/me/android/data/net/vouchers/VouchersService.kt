@@ -53,4 +53,9 @@ interface VouchersService {
     @PATCH("api/v1/platform/demo/transactions/{testToken}")
     fun demoVoucher(@Path("testToken") testToken: String, @Body makeDemoTransaction: MakeDemoTransaction): Observable<DemoTransaction>
 
+
+
+    @GET("api/v1/platform/provider/vouchers/{address}")
+    fun getVoucherAsProviderV2(@Path("address") address: String): Observable<GetVoucher>
+
 }

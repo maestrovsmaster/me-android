@@ -8,17 +8,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import io.forus.me.android.domain.models.vouchers.Voucher
 import io.forus.me.android.presentation.R
+import io.forus.me.android.presentation.api_data.models.Organization
+import io.forus.me.android.presentation.api_data.models.VoucherProvider
 import io.forus.me.android.presentation.databinding.FragmentProviderv2Binding
 
 import io.forus.me.android.presentation.view.screens.provider_v2.BaseFragment
@@ -26,9 +28,10 @@ import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activ
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
 import io.forus.me.android.presentation.view.screens.provider_v2.offer.OffersFragment
 import io.forus.me.android.presentation.view.screens.provider_v2.reservation.ReservationFragment
-import kotlinx.android.synthetic.main.fragment_voucher_provider.*
-import kotlinx.android.synthetic.main.view_organization.*
 import java.util.ArrayList
+
+
+
 
 
 class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelectedListener  {
@@ -81,9 +84,9 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        providerViewModel.voucher.observe(viewLifecycleOwner,{ voucher ->
+        providerViewModel.voucherProvider.observe(viewLifecycleOwner,{ voucher ->
             voucher?.let {
-                updateHeader(voucher)
+                updateUI(voucher)
             }
         })
 
@@ -99,15 +102,67 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
         _binding = null
     }
 
-    fun updateUI(){
-        //binding.pr
+
+
+    fun updateUI(voucherProvider: VoucherProvider){
+        updateHeader(voucherProvider)
+        updateOrgsSpinner(voucherProvider.allowed_product_organizations)
+
+    }
+
+    fun updateOrgsSpinner(orgs: List<Organization>){
+        /*binding.spOrgs.adapter = OrgsSpinnerAdapter(requireContext(), android.R.layout.simple_spinner_item, orgs){
+
+        }*/
+
+
+
+        val adapter: ArrayAdapter<Organization> = ArrayAdapter<Organization>(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            orgs
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spOrgs.adapter = adapter
+
+        /*createFromResource(
+            requireContext(),
+            R.array.history_period_types,
+            R.layout.item_spinner_history
+        )*/
+      //  binding.spOrgs.setSpinnerEventsListener(this)
+       /* binding.spOrgs.onItemSelectedListener= object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                binding.tvCurrentOrg.text = binding.spOrgs.selectedItem.toString()
+               // setSpinnerState(false)
+
+                Log.d("Spinner","position = $position")
+             //   historyActionsViewModel.movementStatuseListRequest(getPeriod(position))
+            }
+        }*/
+
+        binding.tvCurrentOrg.text = (binding.spOrgs.selectedItem as Organization).name
+        /*binding.spOrgs.setOnClickListener {
+            binding.spFilter.performClick()
+            spinnerState = !spinnerState
+            setSpinnerState(spinnerState)
+        }*/
     }
 
 
-    fun updateHeader(voucher: Voucher){
-        binding.tvName.text = voucher.name//tv_name.text = vs.model.item?.voucher?.name
-        binding.tvOrganization.text = voucher.organizationName//tv_organization.text = vs.model.item?.voucher?.organizationName
-        binding.ivIcon.setImageUrl(voucher.logo)//iv_icon.setImageUrl(vs.model.item?.voucher?.logo)
+    fun updateHeader(voucherProvider: VoucherProvider){
+        binding.tvName.text = voucherProvider.fund.name//tv_name.text = vs.model.item?.voucher?.name
+        binding.tvOrganization.text = voucherProvider.fund.organization.name
+        //tv_organization.text = vs.model.item?.voucher?.organizationName
+        binding.ivIcon.setImageUrl(voucherProvider.fund.logo)//iv_icon.setImageUrl(vs.model.item?.voucher?.logo)
 
 
        /* if(isDemoVoucher!= null && isDemoVoucher!!) {
@@ -203,6 +258,7 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
             return POSITION_NONE
         }
     }
+
 
 
 

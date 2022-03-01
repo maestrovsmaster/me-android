@@ -26,15 +26,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MeServiceFactory {
 
-    private static AccountLocalDataSource accountLocalDataSource;
+     static AccountLocalDataSource accountLocalDataSource;
 
 
-    private static Context context;
+    static Context context;
     private static MeServiceFactory ourInstance;
 
     public static MeServiceFactory getInstance() {
         return ourInstance;
     }
+
+
 
     private MeServiceFactory(AccountLocalDataSource accountLocalDataSource) {
         MeServiceFactory.accountLocalDataSource = accountLocalDataSource;
@@ -43,6 +45,10 @@ public class MeServiceFactory {
     public static void init(Context context, AccountLocalDataSource accountLocalDataSource){
         ourInstance = new MeServiceFactory(accountLocalDataSource);
         MeServiceFactory.context = context;
+    }
+
+    public String getToken(){
+        return accountLocalDataSource.getTokenString();
     }
 
 

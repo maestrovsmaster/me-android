@@ -3,8 +3,6 @@ package io.forus.me.android.presentation.view.screens.provider_v2.reservation
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +10,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import io.forus.me.android.domain.models.vouchers.Voucher
-import io.forus.me.android.presentation.R
-import io.forus.me.android.presentation.databinding.FragmentProviderv2Binding
+import io.forus.me.android.presentation.api_data.models.VoucherProvider
 import io.forus.me.android.presentation.databinding.FragmentReservationBinding
 
 import io.forus.me.android.presentation.view.screens.provider_v2.BaseFragment
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
-import kotlinx.android.synthetic.main.fragment_voucher_provider.*
-import kotlinx.android.synthetic.main.view_organization.*
 
 
 class ReservationFragment : BaseFragment() {
@@ -74,13 +68,13 @@ class ReservationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        providerViewModel.voucher.observe(viewLifecycleOwner,{ voucher ->
+        providerViewModel.voucherProvider.observe(viewLifecycleOwner,{ voucher ->
             voucher?.let {
                 updateHeader(voucher)
             }
         })
 
-        providerViewModel.getVoucher(voucherAddress)
+       // providerViewModel.getVoucher(voucherAddress)
     }
 
 
@@ -95,7 +89,7 @@ class ReservationFragment : BaseFragment() {
     }
 
 
-    fun updateHeader(voucher: Voucher){
+    fun updateHeader(voucher: VoucherProvider){
 
 
 
