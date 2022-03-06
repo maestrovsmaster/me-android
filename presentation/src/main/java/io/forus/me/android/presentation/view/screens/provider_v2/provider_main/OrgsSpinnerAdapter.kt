@@ -1,6 +1,7 @@
 package io.forus.me.android.presentation.view.screens.provider_v2.provider_main
 
 import android.content.Context
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -9,43 +10,74 @@ import android.widget.ImageView
 import android.widget.TextView
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.api_data.models.Organization
+import android.widget.BaseAdapter
+import io.forus.me.android.presentation.view.component.images.AutoLoadImageView
 
-class OrgsSpinnerAdapter(
-    context: Context, textViewResourceId: Int,
-    val list: List<Organization>,
-    val callback: (Organization)->(Unit)
-) : ArrayAdapter<Organization>(
-    context, textViewResourceId, list
-) {
+
+class OrgsSpinnerAdapter(val context: Context, var dataSource: List<Organization>) : BaseAdapter() {
+
+    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+
+        return getCustomView(position, convertView, parent)
+    }
+
     override fun getDropDownView(
-        position: Int, convertView: View,
-        parent: ViewGroup
-    ): View {
-        return getCustomView(position, convertView, parent)
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return getCustomView(position, convertView, parent)
-    }
-
-    fun getCustomView(
         position: Int, convertView: View?,
         parent: ViewGroup?
-    ): View {
+    ): View? {
+        return getCustomView(position, convertView!!, parent!!)
+    }
 
-        val item = list[position]
+    fun getCustomView( position: Int,  convertView: View?,
+                       parent:ViewGroup?): View{
 
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val row: View = inflater.inflate(R.layout.item_organization_spinner_row, parent, false)
-
-        row.setOnClickListener {
-            callback(item)
+        val view: View
+        val vh: ItemHolder
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.item_organization_spinner_row, parent, false)
+            vh = ItemHolder(view)
+            view?.tag = vh
+        } else {
+            view = convertView
+            vh = view.tag as ItemHolder
         }
 
-        val tv_fund = row.findViewById<View>(R.id.tv_fund) as TextView
-        tv_fund.text = item.name
-       // val iv_icon = row.findViewById<View>(R.id.iv_icon) as io.forus.me.android.presentation.view.component.images.AutoLoadImageView
-       // iv_icon.setImageUrl(vs.model.selectedOrganization.logo)
-        return row
+        val org = dataSource.get(position)
+
+        vh.label.text = org.name
+
+
+        org.logo?.let {
+            vh.img.setImageUrl(org.logo)
+        }
+
+        return view
+
     }
+
+    override fun getItem(position: Int): Any? {
+        return dataSource[position];
+    }
+
+    override fun getCount(): Int {
+        Log.d("mSpinner","size = ${dataSource.size}")
+        return dataSource.size;
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong();
+    }
+
+    private class ItemHolder(row: View?) {
+        val label: TextView
+        val img: AutoLoadImageView
+
+        init {
+            label = row?.findViewById(R.id.tv_fund) as TextView
+            img = row?.findViewById(R.id.iv_icon) as AutoLoadImageView
+        }
+    }
+
 }

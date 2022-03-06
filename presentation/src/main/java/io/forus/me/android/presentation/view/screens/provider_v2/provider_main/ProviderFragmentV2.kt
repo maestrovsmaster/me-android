@@ -1,40 +1,36 @@
 package io.forus.me.android.presentation.view.screens.provider_v2.provider_main
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.navigation.NavigationView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import io.forus.me.android.presentation.R
-import io.forus.me.android.presentation.api_data.models.Organization
-import io.forus.me.android.presentation.api_data.models.VoucherProvider
+import io.forus.me.android.presentation.api_data.models.*
 import io.forus.me.android.presentation.databinding.FragmentProviderv2Binding
+import io.forus.me.android.presentation.extension.setVisible
 
 import io.forus.me.android.presentation.view.screens.provider_v2.BaseFragment
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
-import io.forus.me.android.presentation.view.screens.provider_v2.offer.OffersFragment
-import io.forus.me.android.presentation.view.screens.provider_v2.reservation.ReservationFragment
-import java.util.ArrayList
+import io.forus.me.android.presentation.view.screens.provider_v2.offer.ProductsAdapter
+import io.forus.me.android.presentation.view.screens.provider_v2.reservation.TransactionsAdapter
+import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentActivity
+import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentFragment
+import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ProductSerializable
 
 
-
-
-
-class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelectedListener  {
+class ProviderFragmentV2 : BaseFragment() {
 
 
     private val providerViewModel by lazy {
@@ -43,7 +39,7 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private lateinit var address: String
+    //private lateinit var address: String
 
     private var _binding: FragmentProviderv2Binding? = null
     private val binding get() = _binding!!
@@ -76,23 +72,36 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+//"0x35ce84143e1066ae8e05a6455089568cc566e0b9"
         voucherAddress = requireActivity().intent.getStringExtra("VOUCHER_ADDRESS_EXTRA")!!
-        Log.d("ProviderFragmentV2","ProviderFragmentV2 extras = $voucherAddress")
+        Log.d("ProviderFragmentV2", "ProviderFragmentV2 extras = $voucherAddress")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        providerViewModel.voucherProvider.observe(viewLifecycleOwner,{ voucher ->
+        binding.progress.setVisible(true)
+        providerViewModel.voucherProvider.observe(viewLifecycleOwner, { voucher ->
             voucher?.let {
+                binding.progress.setVisible(false)
                 updateUI(voucher)
+
             }
         })
 
+        providerViewModel.voucherSet.observe(viewLifecycleOwner) { set ->
+            if (set != null) {
+                binding.progress.setVisible(false)
+                updateLists(set)
+                Log.d("asdasdasd", "Set = $set")
+            } else {
+                // fgTODO
+            }
+        }
+
         providerViewModel.getVoucher(voucherAddress)
 
-        setupViewPager()
+
     }
 
 
@@ -103,164 +112,199 @@ class ProviderFragmentV2 : BaseFragment(), NavigationView.OnNavigationItemSelect
     }
 
 
-
-    fun updateUI(voucherProvider: VoucherProvider){
+    fun updateUI(voucherProvider: VoucherProvider) {
         updateHeader(voucherProvider)
-        updateOrgsSpinner(voucherProvider.allowed_product_organizations)
+        binding.recycler.layoutManager = LinearLayoutManager(context)
 
+
+        binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
+            customView = createTabView(
+                getString(R.string.reserving), ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_add_shopping_cart_24px
+                )!!
+            )
+        })
+        binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
+            customView = createTabView(
+                getString(R.string.offer), ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_market
+                )!!
+            )
+        })
+
+        binding.tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if(tab!!.position == 0){
+                    providerViewModel.transactionsList.value?.let {
+                        showTransactions(it)
+                    }
+
+                }else{
+                    providerViewModel.productsList.value?.let {
+                        showProducts(it)
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+        })
+
+
+        val allowedOrganizations =
+            voucherProvider.allowed_product_organizations //allowed_organizations
+        if (allowedOrganizations.size > 0) {
+            updateOrgsSpinner(allowedOrganizations)
+
+            val selectedOrg = allowedOrganizations[0]
+            binding.progress.setVisible(true)
+            providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
+        } else {
+            //error  Продукт использован
+        }
     }
 
-    fun updateOrgsSpinner(orgs: List<Organization>){
-        /*binding.spOrgs.adapter = OrgsSpinnerAdapter(requireContext(), android.R.layout.simple_spinner_item, orgs){
-
-        }*/
-
-
+    fun updateOrgsSpinner(orgs: List<Organization>) {
 
         val adapter: ArrayAdapter<Organization> = ArrayAdapter<Organization>(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
             orgs
         )
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spOrgs.adapter = adapter
 
-        /*createFromResource(
-            requireContext(),
-            R.array.history_period_types,
-            R.layout.item_spinner_history
-        )*/
-      //  binding.spOrgs.setSpinnerEventsListener(this)
-       /* binding.spOrgs.onItemSelectedListener= object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+        binding.spOrgs.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                val selectedOrg = orgs[position]
+                Log.d("Itemwd", "selectedOrg $selectedOrg")
+                binding.progress.setVisible(true)
+                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
             }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                binding.tvCurrentOrg.text = binding.spOrgs.selectedItem.toString()
-               // setSpinnerState(false)
+            override fun onNothingSelected(p0: AdapterView<*>?) {
 
-                Log.d("Spinner","position = $position")
-             //   historyActionsViewModel.movementStatuseListRequest(getPeriod(position))
             }
-        }*/
+        }
+
 
         binding.tvCurrentOrg.text = (binding.spOrgs.selectedItem as Organization).name
-        /*binding.spOrgs.setOnClickListener {
-            binding.spFilter.performClick()
-            spinnerState = !spinnerState
-            setSpinnerState(spinnerState)
-        }*/
+
     }
 
 
-    fun updateHeader(voucherProvider: VoucherProvider){
+    fun updateHeader(voucherProvider: VoucherProvider) {
         binding.tvName.text = voucherProvider.fund.name//tv_name.text = vs.model.item?.voucher?.name
         binding.tvOrganization.text = voucherProvider.fund.organization.name
         //tv_organization.text = vs.model.item?.voucher?.organizationName
         binding.ivIcon.setImageUrl(voucherProvider.fund.logo)//iv_icon.setImageUrl(vs.model.item?.voucher?.logo)
 
 
-       /* if(isDemoVoucher!= null && isDemoVoucher!!) {
-            tv_organization_name.text = requireContext().getString(R.string.check_email_open_mail_app)
-        }else{
-            if (vs.model.selectedOrganization != null) {
-                tv_organization_name.text = vs.model.selectedOrganization.name
-                if (vs.model.selectedOrganization.logo?.isBlank() != true)
-                    iv_organization_icon.setImageUrl(vs.model.selectedOrganization.logo)
-            }
-        }*/
+        /* if(isDemoVoucher!= null && isDemoVoucher!!) {
+             tv_organization_name.text = requireContext().getString(R.string.check_email_open_mail_app)
+         }else{
+             if (vs.model.selectedOrganization != null) {
+                 tv_organization_name.text = vs.model.selectedOrganization.name
+                 if (vs.model.selectedOrganization.logo?.isBlank() != true)
+                     iv_organization_icon.setImageUrl(vs.model.selectedOrganization.logo)
+             }
+         }*/
 
     }
 
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-       // TODO("Not yet implemented")
 
-        return false
-    }
+    fun updateLists(set: VoucherSet) {
 
-    internal var viewPagerAdapter: ViewPagerAdapter? = null
-
-    var reservationFragment: ReservationFragment? = null
-    var offersFragment: OffersFragment? = null
-
-    private fun setupViewPager() {
-        if (!requireActivity().isDestroyed) {
-            if (requireActivity().supportFragmentManager != null) {
-
-                val cfManager: FragmentManager = requireActivity().supportFragmentManager
-                viewPagerAdapter = ViewPagerAdapter(cfManager)
-
-                reservationFragment =
-                    ReservationFragment()
+        val hasTransactions = set.transactions != null && set.transactions.isNotEmpty()
+        val hasProducts = set.products != null && set.products.isNotEmpty()
 
 
-                offersFragment = OffersFragment()
+        binding.tabLayout.setVisible(hasTransactions && hasProducts)
 
-                viewPagerAdapter!!.addFragment(
-                    reservationFragment!!,
-                    getString(R.string.reserving)
-                )
+        binding.clListHeader.setVisible(hasTransactions && !hasProducts || !hasTransactions && hasProducts)
+        binding.tvListTitle.text = if (hasTransactions) {
+            getString(R.string.reserving_title)
+        } else if (hasProducts) {
+            getString(R.string.offer_title)
+        } else {
+            ""
+        }
 
-                viewPagerAdapter!!.addFragment(
-                    offersFragment!!,
-                    getString(R.string.offer)
-                )
-                binding.viewPager.adapter = viewPagerAdapter
+        binding.tvListSubTitle.text = if (hasTransactions) {
+            getString(R.string.reserving_subtitle)
+        } else if (hasProducts) {
+            getString(R.string.offer_subtitle)
+        } else {
+            ""
+        }
 
-                binding.tabLayout.addOnTabSelectedListener(object :
-                    TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                    //    getTextViewFromTab(tab.position).typeface = getBoldTypeface()
-                    }
-
-                    override fun onTabUnselected(tab: TabLayout.Tab) {
-                       // getTextViewFromTab(tab.position).typeface = getNormalTypeface()
-                    }
-
-                    override fun onTabReselected(tab: TabLayout.Tab?) {
-                        // TODO("Not yet implemented")
-                    }
-                })
-
-                binding.tabLayout.setupWithViewPager(binding.viewPager)
-            }
+        if (hasTransactions) {
+            showTransactions(set.transactions!!)
+        } else if (hasProducts) {
+            showProducts(set.products!!)
         }
     }
 
-    internal class ViewPagerAdapter(manager: FragmentManager?) :
-        FragmentPagerAdapter(manager!!) {
-        private val mFragmentList: MutableList<Fragment> = ArrayList()
-        private val mFragmentTitleList: MutableList<String> = ArrayList()
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
+    fun showTransactions(list: List<Transaction>) {
+        val adapter = TransactionsAdapter() {
 
-        override fun getCount(): Int {
-            return mFragmentList.size
         }
+        adapter.setItems(list)
+        binding.recycler.adapter = adapter
 
-        fun addFragment(fragment: Fragment, title: String) {
-            Log.d("fragment", "ViewPagerAdapter addFragment $title")
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
+    }
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            return mFragmentTitleList[position]
+    fun showProducts(list: List<Product>) {
+        val adapter = ProductsAdapter {
+            goToProduct(it)
         }
+        adapter.setItems(list)
+        binding.recycler.adapter = adapter
 
-        override fun getItemPosition(`object`: Any): Int {
-            return POSITION_NONE
-        }
     }
 
 
+    fun createTabView(text: String, icon: Drawable) =
+        LayoutInflater.from(requireContext()).inflate(R.layout.item_provider_tab, null).apply {
+            findViewById<ImageView>(R.id.img)
+                .setImageDrawable(icon)
+            findViewById<TextView>(R.id.tvText)
+                .setText(text)
+        }
 
+
+    fun goToProduct(prod: Product){
+        /*startActivity(
+            ActionPaymentActivity.getCallingIntent(requireContext(),
+            ProductSerializable(prod.id.toLong(), prod.name, prod.organization.name,
+                prod.organization.id.toLong(),
+                prod.price.toBigDecimal(), prod.price_user.toBigDecimal(),
+                //prod.priceType , item.priceDiscount,
+                null,null,
+                prod.price_locale,
+                prod.price_user_locale,
+                prod.sponsor_subsidy.toBigDecimal() , null , prod.photo
+            ),
+            voucherAddress))*/
+        val product = ProductSerializable(prod.id.toLong(), prod.name, prod.organization.name,
+            prod.organization.id.toLong(),
+            prod.price.toBigDecimal(), prod.price_user.toBigDecimal(),
+            //"",prod.price_user.toBigDecimal(),
+            //prod.priceType , item.priceDiscount,
+            null,null,
+            prod.price_locale,
+            prod.price_user_locale,
+            prod.sponsor_subsidy.toBigDecimal() , null , prod.photo
+        )
+
+       // (activity as ProviderV2Activity).replaceFragment(R.id.dashboard_content, ActionPaymentFragment.newIntent(product, voucherAddress!!
+       // ))
+
+        findNavController().navigate(ProviderFragmentV2Directions.actionProviderFragmentV2ToActionPaymentFragment(voucherAddress, product))
+    }
 
 
 }

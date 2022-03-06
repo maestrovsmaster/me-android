@@ -2,12 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/clHeader"
@@ -104,12 +114,12 @@
     <View
         android:id="@+id/cardDivider"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/clHeader"
         android:layout_height="5dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="0dp"
         android:alpha="0.8"
-        android:background="@drawable/shape_shadow_gradient" />
+        android:background="@drawable/shape_shadow_gradient"
+        app:layout_constraintTop_toBottomOf="@id/clHeader" />
 
     <io.forus.me.android.presentation.view.component.text.TextView
         android:id="@+id/tvCurrentOrg"
@@ -117,25 +127,28 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="0dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/cardDivider"
-        android:layout_marginTop="15dp"
         android:ellipsize="end"
+        android:gravity="center_vertical"
         android:lines="1"
         android:maxLines="1"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cardDivider"
         app:type="medium"
         tools:text="Bike" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
+    <Spinner
         android:id="@+id/spOrgs"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@null"
-        app:layout_constraintTop_toBottomOf="@id/tvCurrentOrg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentOrg"
         app:layout_constraintWidth_percent="1.0" />
 
 
@@ -143,43 +156,82 @@
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        app:layout_constraintTop_toBottomOf="@id/spOrgs"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="0dp"
         android:alpha="0.8"
-        android:background="@drawable/shape_shadow_gradient" />
+        android:background="@drawable/shape_shadow_gradient"
+        app:layout_constraintTop_toBottomOf="@id/spOrgs" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <RelativeLayout
+        android:id="@+id/rltabLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/divider2"
-        />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/divider2">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/clListHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <io.forus.me.android.presentation.view.component.text.TextView
+                android:id="@+id/tvListTitle"
+                style="@style/CardTitle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                app:type="medium"
+                tools:text="Bike" />
+
+            <io.forus.me.android.presentation.view.component.text.TextView
+                android:id="@+id/tvListSubTitle"
+                style="@style/BackToCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                tools:text="Initflow" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintBottom_toTopOf="@id/rl_make"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp" />
-
-
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@id/rl_make"
+        app:layout_constraintTop_toBottomOf="@id/rltabLayout" />
 
 
     <RelativeLayout
         android:id="@+id/rl_make"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <io.forus.me.android.presentation.view.component.buttons.Button
             android:id="@+id/btn_make"

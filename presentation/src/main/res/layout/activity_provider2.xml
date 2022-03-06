@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.screens.records.create_record.CreateRecordActivity"
-    android:background="#DCFAB9"
+
     >
 
 
@@ -14,7 +14,9 @@
     <RelativeLayout
         android:id="@+id/headView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/closeBt"

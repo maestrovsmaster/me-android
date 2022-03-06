@@ -1,14 +1,12 @@
 package androidx.core.app;
 
 
-
-
 import androidx.fragment.app.Fragment;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-class BackstackAccessor1 {
+public class BackstackAccessor{
     public static boolean isFragmentOnBackStack(Fragment fragment) {
         return false;
     }

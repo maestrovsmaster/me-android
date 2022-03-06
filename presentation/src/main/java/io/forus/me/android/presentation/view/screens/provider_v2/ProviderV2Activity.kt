@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation.findNavController
@@ -13,7 +14,7 @@ import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.databinding.ActivityProvider2Binding
 import io.forus.me.android.presentation.view.screens.vouchers.provider.ProviderActivity
 
-class ProviderV2Activity :  AppCompatActivity() {
+class ProviderV2Activity : BaseActivity2() {
 
 
     private val providerViewModel by lazy {

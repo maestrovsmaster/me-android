@@ -354,10 +354,12 @@
     <string name="waiting">Wachten...</string>
 
     <string name="reserving">Reserveringen</string>
-    <string name="reserving_title">Onderstaand aanbod is door de klant gereserveerd</string>
+    <string name="reserving_title"> Kies een reservering</string>
+    <string name="reserving_subtitle">Onderstaand aanbod is door de klant gereserveerd</string>
 
     <string name="offer">Aanbod</string>
-    <string name="offer_title">Aanbod van uw organisatie</string>
+    <string name="offer_title">Kies een aanbod</string>
+    <string name="offer_subtitle">Aanbod van uw organisatie</string>
 
 
 </resources>

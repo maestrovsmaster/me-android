@@ -17,4 +17,9 @@ data class Organization(
     val phone_public: Boolean?,
     val website: String?,
     val website_public: Boolean?
-): Parcelable
+): Parcelable{
+
+    override fun toString(): String {
+        return "$name"
+    }
+}

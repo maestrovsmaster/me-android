@@ -224,8 +224,8 @@ class QrActionProcessor(private val scanner: QrScannerActivity,
         if (false and settingsDataSource.isPinEnabled()) {
             // Database will be opened later
             val useFingerprint = settingsDataSource.isFingerprintEnabled()
-            //navigator.navigateToCheckTransactionPin(scanner, ProviderActivity.getCallingIntent(scanner, address), useFingerprint)
-            navigator.navigateToCheckTransactionPin(scanner, ProviderV2Activity.getCallingIntent(scanner, address), useFingerprint)
+            navigator.navigateToCheckTransactionPin(scanner, ProviderActivity.getCallingIntent(scanner, address), useFingerprint)
+           // navigator.navigateToCheckTransactionPin(scanner, ProviderV2Activity.getCallingIntent(scanner, address), useFingerprint)
             (android.os.Handler()).postDelayed({
                 reactivateDecoding()
             }, 1000)

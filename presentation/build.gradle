@@ -288,6 +288,9 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
 
+    //val paging_version = "2.1.2"
+   // implementation("androidx.paging:paging-runtime:$paging_version") // For Kotlin use paging-runtime-ktx
 
+    //implementation("androidx.paging:paging-rxjava2:$paging_version") // For Kotlin use paging-rxjava2-ktx
 
 }

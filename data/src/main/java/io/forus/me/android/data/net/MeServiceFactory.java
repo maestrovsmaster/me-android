@@ -85,6 +85,7 @@ public class MeServiceFactory {
                     .header("Accept", "application/json")
                     .header("Client-Key", "general")
                     .header("Client-Type", "me_app-android")
+                    .header("Client-Version", "1")
                   //  .header("Origin", Constants.INSTANCE.getBASE_SERVICE_ENDPOINT())
                     .header("User-agent",userAgent)// Constants.getUserAgent())
                  //   .header("X-USER-OS", "Android")

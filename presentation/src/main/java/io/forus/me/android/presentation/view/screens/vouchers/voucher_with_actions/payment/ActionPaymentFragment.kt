@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.forus.me.android.presentation.R
@@ -47,7 +48,7 @@ class ActionPaymentFragment : BaseFragment() {
         }
     }
 
-
+    private val safeArgs: ActionPaymentFragmentArgs by navArgs()
     //lateinit var mainViewModel: ActionPaymentViewModel
 
     private val mainViewModel: ActionPaymentViewModel by lazy {
@@ -84,8 +85,14 @@ class ActionPaymentFragment : BaseFragment() {
         return super.onCreateView(inflater, container, savedInstanceState).also {
             val bundle = this.arguments
             if (bundle != null) {
+                try {
                 voucherAddress = bundle.getString(VOUCHER_ADDRESS_EXTRA, "")
-                product = bundle.getSerializable(ACTION_PRODUCT_EXTRA) as ProductSerializable
+
+                    product = bundle.getSerializable(ACTION_PRODUCT_EXTRA) as ProductSerializable
+                }catch (e: Exception){
+                    voucherAddress =  safeArgs.voucherAddress
+                    product = safeArgs.product
+                }
 
 
             }
