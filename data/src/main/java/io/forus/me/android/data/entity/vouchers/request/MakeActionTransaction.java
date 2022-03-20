@@ -11,16 +11,17 @@ public class MakeActionTransaction {
     @SerializedName("product_id")
     private Long product_id;
 
-    //@SerializedName("organization_id")
-   // private Long organizationId;
+    @SerializedName("organization_id")
+    private Long organizationId;
 
     @SerializedName("note")
     private String note;
 
-    public MakeActionTransaction( Long product_id, String note) {
+    public MakeActionTransaction( Long product_id, String note, Long organizationId) {
 
         this.product_id = product_id;
         this.note = note;
+        this.organizationId = organizationId;
     }
 
 

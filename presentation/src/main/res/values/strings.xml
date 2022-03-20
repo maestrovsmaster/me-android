@@ -129,6 +129,7 @@
 
 
     <!-- Price agreement -->
+    <string name="transaction">Transactie</string>
     <string name="price_agreement">Price agreement</string>
     <string name="price_agreement_total_price">Total price</string>
     <string name="price_agreement_discount_by_provider_">Discount by %1$s</string>

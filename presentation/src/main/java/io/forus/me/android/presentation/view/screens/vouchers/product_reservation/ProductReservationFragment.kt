@@ -64,8 +64,8 @@ class ProductReservationFragment : ToolbarLRFragment<ProductReservationModel, Pr
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.fragment_reservation_vouchers_recycler, container, false).also {
 
-        address = if (arguments == null) "" else arguments!!.getString(VOUCHER_ADDRESS_EXTRA, "")
-        showParentVoucher = if (arguments == null) false else arguments!!.getBoolean(SHOW_PARENT_VOUCHER, false)
+        address = if (arguments == null) "" else requireArguments().getString(VOUCHER_ADDRESS_EXTRA, "")
+        showParentVoucher = if (arguments == null) false else requireArguments().getBoolean(SHOW_PARENT_VOUCHER, false)
 
         adapter = VouchersAdapter()
     }
@@ -75,8 +75,8 @@ class ProductReservationFragment : ToolbarLRFragment<ProductReservationModel, Pr
 
         adapter.clickListener = { voucher: Voucher, sharedViews: List<View>, position: Int ->
             if(context != null ) {
-                //val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
-                val intentToLaunch = ProviderV2Activity.getCallingIntent(requireContext(), voucher.address!!)
+                val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
+                //val intentToLaunch = ProviderV2Activity.getCallingIntent(requireContext(), voucher.address!!)
                 requireContext().startActivity(intentToLaunch)
             }
         }

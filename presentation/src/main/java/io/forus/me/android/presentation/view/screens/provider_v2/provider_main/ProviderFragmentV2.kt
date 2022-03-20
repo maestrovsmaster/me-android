@@ -25,9 +25,6 @@ import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activ
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
 import io.forus.me.android.presentation.view.screens.provider_v2.offer.ProductsAdapter
 import io.forus.me.android.presentation.view.screens.provider_v2.reservation.TransactionsAdapter
-import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentActivity
-import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ActionPaymentFragment
-import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.ProductSerializable
 
 
 class ProviderFragmentV2 : BaseFragment() {
@@ -45,6 +42,8 @@ class ProviderFragmentV2 : BaseFragment() {
     private val binding get() = _binding!!
 
 
+    var selectedOrganization: Organization? = null
+
     fun getConnectivityManager() =
         requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -59,12 +58,6 @@ class ProviderFragmentV2 : BaseFragment() {
         val root: View = binding.root
         //applyFont(requireContext(), root, "fonts/NouvelR.ttf")
 
-
-        val needVerification = true
-
-
-
-
         return root
     }
 
@@ -77,6 +70,8 @@ class ProviderFragmentV2 : BaseFragment() {
         Log.d("ProviderFragmentV2", "ProviderFragmentV2 extras = $voucherAddress")
     }
 
+    private var voucherProvider: VoucherProvider? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -84,6 +79,7 @@ class ProviderFragmentV2 : BaseFragment() {
         providerViewModel.voucherProvider.observe(viewLifecycleOwner, { voucher ->
             voucher?.let {
                 binding.progress.setVisible(false)
+                voucherProvider = it
                 updateUI(voucher)
 
             }
@@ -113,58 +109,86 @@ class ProviderFragmentV2 : BaseFragment() {
 
 
     fun updateUI(voucherProvider: VoucherProvider) {
-        updateHeader(voucherProvider)
-        binding.recycler.layoutManager = LinearLayoutManager(context)
 
+        binding.btnMake.setVisible(voucherProvider.allowed_organizations.isNotEmpty())
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
-            customView = createTabView(
-                getString(R.string.reserving), ContextCompat.getDrawable(
-                    requireContext(), R.drawable.ic_add_shopping_cart_24px
-                )!!
+        binding.btnMake.setOnClickListener {
+            goToSummaPayment(voucherProvider)
+        }
+
+        if(voucherProvider.allowed_product_organizations.isNotEmpty()) {
+
+            binding.titleBar.setOnBack(
+                View.OnClickListener { requireActivity().finish() }
+
             )
-        })
-        binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
-            customView = createTabView(
-                getString(R.string.offer), ContextCompat.getDrawable(
-                    requireContext(), R.drawable.ic_market
-                )!!
-            )
-        })
 
-        binding.tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab!!.position == 0){
-                    providerViewModel.transactionsList.value?.let {
-                        showTransactions(it)
-                    }
+            updateHeader(voucherProvider)
+            binding.recycler.layoutManager = LinearLayoutManager(context)
 
-                }else{
-                    providerViewModel.productsList.value?.let {
-                        showProducts(it)
+            binding.tabLayout.removeAllTabs()
+
+            binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
+                customView = createTabView(
+                    getString(R.string.reserving), ContextCompat.getDrawable(
+                        requireContext(), R.drawable.ic_add_shopping_cart_24px
+                    )!!
+                )
+            })
+            binding.tabLayout.addTab(binding.tabLayout.newTab().apply {
+                customView = createTabView(
+                    getString(R.string.offer), ContextCompat.getDrawable(
+                        requireContext(), R.drawable.ic_market
+                    )!!
+                )
+            })
+
+            binding.tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    if (tab!!.position == 0) {
+                        providerViewModel.transactionsList.value?.let {
+                            showProductVouchers(it)
+                        }
+
+                    } else {
+                        providerViewModel.productsList.value?.let {
+                            showProducts(it)
+                        }
                     }
                 }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+            })
+
+
+            val allowedOrganizations =
+                voucherProvider.allowed_product_organizations //allowed_organizations
+            if (allowedOrganizations.size > 0) {
+                updateOrgsSpinner(allowedOrganizations)
+
+                val selectedOrg = allowedOrganizations[0]
+                selectedOrganization = selectedOrganization
+                binding.progress.setVisible(true)
+                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
+            } else {
+                //error  Продукт использован
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-
-        })
-
-
-        val allowedOrganizations =
-            voucherProvider.allowed_product_organizations //allowed_organizations
-        if (allowedOrganizations.size > 0) {
-            updateOrgsSpinner(allowedOrganizations)
-
-            val selectedOrg = allowedOrganizations[0]
-            binding.progress.setVisible(true)
-            providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
-        } else {
-            //error  Продукт использован
+        }else{
+            goToSummaPayment(voucherProvider)
         }
     }
+
+    fun goToSummaPayment(voucherProvider: VoucherProvider){
+        selectedOrganization?.let { organization ->
+            findNavController().navigate(ProviderFragmentV2Directions.actionProviderFragmentV2ToSummaPaymentFragment(voucherProvider,
+                organization))
+        }
+
+    }
+
 
     fun updateOrgsSpinner(orgs: List<Organization>) {
 
@@ -180,6 +204,7 @@ class ProviderFragmentV2 : BaseFragment() {
         binding.spOrgs.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 val selectedOrg = orgs[position]
+                selectedOrganization = selectedOrg
                 Log.d("Itemwd", "selectedOrg $selectedOrg")
                 binding.progress.setVisible(true)
                 providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
@@ -218,8 +243,10 @@ class ProviderFragmentV2 : BaseFragment() {
 
     fun updateLists(set: VoucherSet) {
 
-        val hasTransactions = set.transactions != null && set.transactions.isNotEmpty()
+        val hasTransactions = set.productVouchers != null && set.productVouchers.isNotEmpty()
         val hasProducts = set.products != null && set.products.isNotEmpty()
+
+
 
 
         binding.tabLayout.setVisible(hasTransactions && hasProducts)
@@ -242,15 +269,15 @@ class ProviderFragmentV2 : BaseFragment() {
         }
 
         if (hasTransactions) {
-            showTransactions(set.transactions!!)
+            showProductVouchers(set.productVouchers!!)
         } else if (hasProducts) {
             showProducts(set.products!!)
         }
     }
 
-    fun showTransactions(list: List<Transaction>) {
+    fun showProductVouchers(list: List<ProductVoucher>) {
         val adapter = TransactionsAdapter() {
-
+            goToActionPayment(it.product,true)
         }
         adapter.setItems(list)
         binding.recycler.adapter = adapter
@@ -259,7 +286,7 @@ class ProviderFragmentV2 : BaseFragment() {
 
     fun showProducts(list: List<Product>) {
         val adapter = ProductsAdapter {
-            goToProduct(it)
+            goToActionPayment(it, false)
         }
         adapter.setItems(list)
         binding.recycler.adapter = adapter
@@ -276,34 +303,17 @@ class ProviderFragmentV2 : BaseFragment() {
         }
 
 
-    fun goToProduct(prod: Product){
-        /*startActivity(
-            ActionPaymentActivity.getCallingIntent(requireContext(),
-            ProductSerializable(prod.id.toLong(), prod.name, prod.organization.name,
-                prod.organization.id.toLong(),
-                prod.price.toBigDecimal(), prod.price_user.toBigDecimal(),
-                //prod.priceType , item.priceDiscount,
-                null,null,
-                prod.price_locale,
-                prod.price_user_locale,
-                prod.sponsor_subsidy.toBigDecimal() , null , prod.photo
-            ),
-            voucherAddress))*/
-        val product = ProductSerializable(prod.id.toLong(), prod.name, prod.organization.name,
-            prod.organization.id.toLong(),
-            prod.price.toBigDecimal(), prod.price_user.toBigDecimal(),
-            //"",prod.price_user.toBigDecimal(),
-            //prod.priceType , item.priceDiscount,
-            null,null,
-            prod.price_locale,
-            prod.price_user_locale,
-            prod.sponsor_subsidy.toBigDecimal() , null , prod.photo
-        )
+    fun goToActionPayment(product: Product,isProductVoucher: Boolean) {
 
-       // (activity as ProviderV2Activity).replaceFragment(R.id.dashboard_content, ActionPaymentFragment.newIntent(product, voucherAddress!!
-       // ))
-
-        findNavController().navigate(ProviderFragmentV2Directions.actionProviderFragmentV2ToActionPaymentFragment(voucherAddress, product))
+        voucherProvider?.let {
+            findNavController().navigate(
+                ProviderFragmentV2Directions.actionProviderFragmentV2ToActionPaymentFragment(
+                    voucherAddress,
+                    product, it.fund.name,
+                    isProductVoucher
+                )
+            )
+        }
     }
 
 

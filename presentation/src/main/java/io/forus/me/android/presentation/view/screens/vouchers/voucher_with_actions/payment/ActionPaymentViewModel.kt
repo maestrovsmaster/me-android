@@ -12,26 +12,35 @@ import io.forus.me.android.presentation.view.screens.main.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import androidx.lifecycle.MutableLiveData
-
+import io.forus.me.android.presentation.api_data.models.Product
+import java.math.BigDecimal
 
 
 class ActionPaymentViewModel(application: Application) : BaseViewModel(application) {
 
     var vouchersRepository: VouchersRepository = Injection.instance.vouchersRepository
 
-    var voucherAddress: String? = null
+
 
     @Bindable
     var note = MutableLiveData<String>()
 
-    private var product: ProductSerializable? = null
+    private var product: Product? = null
+    public fun setProduct(product: Product) {
+        this.product = product
+        refreshUI()
+    }
+
+    var voucherAddress: String? = null
+    var sponsorName: String? = null
+    var isProductVoucher: Boolean = false
 
     val productName = MutableLiveData<String>()
     val productPrice = MutableLiveData<String>()
     val orgName = MutableLiveData<String>()
 
     val confirmPayment = MutableLiveData<Boolean>()
-    val showPriceAgreement = MutableLiveData<Boolean>()
+
     val successPayment = MutableLiveData<Boolean>()
     val errorPayment = MutableLiveData<Throwable?>()
 
@@ -49,25 +58,20 @@ class ActionPaymentViewModel(application: Application) : BaseViewModel(applicati
         progress.value = false
 
         confirmPayment.value = false
-        showPriceAgreement.value = false
         successPayment.value = false
         errorPayment.value = null
 
         setCommitButtonEnable(true)
     }
 
-    public fun setProduct(product: ProductSerializable) {
 
-        this.product = product
-        refreshUI()
-    }
 
     fun onSaveClick(view: View?) {
         confirmPayment.postValue(true)
     }
 
     fun onPricesClick(view: View?) {
-        showPriceAgreement.postValue(true)
+
     }
 
 
@@ -77,48 +81,60 @@ class ActionPaymentViewModel(application: Application) : BaseViewModel(applicati
 
         val resources = getApplication<Application>().resources
 
-        /*
-        val priceValue: String = if (product!!.noPrice) {
-            if (product!!.noPriceType == NoPriceType.free.name) {
-                resources.getString(R.string.free)
-            } else {
-                NumberFormat.getCurrencyInstance(Locale("nl", "NL"))
-                        .format(product!!.priceUser)
-            }
-        } else {
-            NumberFormat.getCurrencyInstance(Locale("nl", "NL"))
-                    .format(product!!.priceUser)
-        }
 
-
-
-        productPrice.postValue(priceValue)
-
-         */
-
-        //productName.postValue(product!!.name)
 
         productName.value = product!!.name
-        // @{model.productName}
 
-
-
-        orgName.postValue(product!!.companyName)
-
-        /* val url = item.photoURL
-         if (url != null && url.isNotEmpty()) {
-             Glide.with(context).load(url)
-                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                     .into(icon)
-         }*/
 
     }
 
-    fun makeTransaction() {
+    fun makeSummaVoucherTransaction(voucherAddress: String, amount: BigDecimal, note: String?, organizationId: Long) {
 
         progress.postValue(true)
         commitButtonEnable.postValue(false)
-        vouchersRepository.makeActionTransaction(voucherAddress!!, note.value ?: "",  product!!.id)
+        vouchersRepository.makeTransaction(voucherAddress, amount, note?:"",  organizationId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                progress.postValue(false)
+                successPayment.postValue(true)
+                //commitButtonEnable.postValue(true)
+            }
+            .onErrorReturn {
+                progress.postValue(false)
+                errorPayment.postValue(it)
+                //commitButtonEnable.postValue(true)
+            }
+            .subscribe()
+    }
+
+    /*fun makeProductVoucherTransaction() {
+
+        progress.postValue(true)
+        commitButtonEnable.postValue(false)
+        vouchersRepository.makeActionTransaction(voucherAddress!!, note.value ?: "",  product!!.id.toLong(),
+            product!!.organization.id.toLong())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                progress.postValue(false)
+                successPayment.postValue(true)
+                //commitButtonEnable.postValue(true)
+            }
+            .onErrorReturn {
+                progress.postValue(false)
+                errorPayment.postValue(it)
+                //commitButtonEnable.postValue(true)
+            }
+            .subscribe()
+    }*/
+
+    fun makeProductTransaction() {
+
+        progress.postValue(true)
+        commitButtonEnable.postValue(false)
+        vouchersRepository.makeActionTransaction(voucherAddress!!, note.value ?: "",  product!!.id.toLong(),
+            product!!.organization.id.toLong())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {

@@ -2,7 +2,6 @@ package io.forus.me.android.presentation.view.screens.provider_v2.offer
 
 import androidx.recyclerview.widget.DiffUtil
 import io.forus.me.android.presentation.api_data.models.Product
-import io.forus.me.android.presentation.api_data.models.Transaction
 
 
 class ProductsDiffUtilCallback(

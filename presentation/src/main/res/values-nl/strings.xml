@@ -118,6 +118,7 @@
     <string name="email_support">support@forus.io</string>
 
     <!-- Price agreement -->
+    <string name="transaction">Transactie</string>
     <string name="price_agreement">Transactie details</string>
     <string name="price_agreement_total_price">Totaalprijs</string>
     <string name="price_agreement_discount_by_provider_">Korting vanuit %1$s</string>

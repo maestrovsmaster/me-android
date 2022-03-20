@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+    <io.forus.me.android.presentation.view.component.BaseTitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/transaction"
+        />
+
+
 
     <ProgressBar
         android:id="@+id/progress"
@@ -31,7 +42,7 @@
         app:cardCornerRadius="@dimen/card_radius"
         app:cardElevation="@dimen/card_elevation_small"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/titleBar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -221,7 +232,10 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@id/rl_make"
-        app:layout_constraintTop_toBottomOf="@id/rltabLayout" />
+        app:layout_constraintTop_toBottomOf="@id/rltabLayout"
+        tools:listitem="@layout/item_voucher_transcation_v2"
+        tools:itemCount="4"
+        />
 
 
     <RelativeLayout

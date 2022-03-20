@@ -35,6 +35,11 @@
         <attr name="textSize" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="BaseTitleBar">
+        <attr name="title"  />
+        <attr name="showDivider" format="boolean" />
+    </declare-styleable>
+
 
     <declare-styleable name="CustomShareButtonAttrs">
         <attr name="sb_text" format="string" />

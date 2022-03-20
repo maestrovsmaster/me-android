@@ -1,12 +1,12 @@
 package io.forus.me.android.presentation.view.screens.provider_v2.reservation
 
 import androidx.recyclerview.widget.DiffUtil
-import io.forus.me.android.presentation.api_data.models.Transaction
+import io.forus.me.android.presentation.api_data.models.ProductVoucher
 
 
 class TransactionsDiffUtilCallback(
-    private val oldList: List<Transaction>,
-    private val newList: List<Transaction>
+    private val oldList: List<ProductVoucher>,
+    private val newList: List<ProductVoucher>
 ): DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].address == newList[newItemPosition].address

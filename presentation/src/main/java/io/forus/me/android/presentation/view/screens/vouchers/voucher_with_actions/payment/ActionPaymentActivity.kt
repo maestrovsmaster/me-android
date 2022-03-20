@@ -10,10 +10,7 @@ import androidx.fragment.app.Fragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.view.activity.BaseActivity
-import io.forus.me.android.presentation.view.activity.SlidingPanelActivity
-import io.forus.me.android.presentation.view.fragment.QrFragment
 import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.ActionsActivity
-import io.forus.me.android.presentation.view.screens.vouchers.voucher_with_actions.payment.popup.PriceAgreementFragment
 import kotlinx.android.synthetic.main.activity_toolbar_sliding_panel.*
 import kotlinx.android.synthetic.main.toolbar_view.*
 
@@ -56,11 +53,7 @@ class ActionPaymentActivity : BaseActivity() {
 
         }
 
-        product.let {
-            replaceFragment(R.id.dashboard_content, ActionPaymentFragment.newIntent(product!!, voucherAddress!!
-            ))
 
-        }
 
 
         toolbar_title.text = getString(R.string.payment)

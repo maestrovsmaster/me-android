@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Transaction(
+data class ProductVoucher(
     val address: String,
     val allowed_organizations: List<Organization>,
     val created_at: String,

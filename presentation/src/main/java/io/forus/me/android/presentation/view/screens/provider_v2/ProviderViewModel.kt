@@ -1,7 +1,6 @@
 package io.forus.me.android.presentation.view.screens.provider_v2
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import io.forus.me.android.presentation.api_data.models.*
 import io.forus.me.android.presentation.view.screens.main.BaseViewModel
@@ -24,7 +23,7 @@ public class ProviderViewModel(application: Application) : BaseViewModel(applica
 
     val voucherProvider = MutableLiveData<VoucherProvider?>(null)
 
-    val transactionsList = MutableLiveData<List<Transaction>?>(null)
+    val transactionsList = MutableLiveData<List<ProductVoucher>?>(null)
     val productsList = MutableLiveData<List<Product>?>(null)
     val voucherSet = MutableLiveData<VoucherSet?>(null)
 
@@ -55,7 +54,7 @@ public class ProviderViewModel(application: Application) : BaseViewModel(applica
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 voucherSet.value = it
-                transactionsList.value = it.transactions
+                transactionsList.value = it.productVouchers
                 productsList.value = it.products
 
             }, {

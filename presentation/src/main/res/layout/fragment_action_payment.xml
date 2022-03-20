@@ -17,6 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <io.forus.me.android.presentation.view.component.BaseTitleBar
+            android:id="@+id/titleBar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/transaction" />
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
@@ -27,6 +36,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"
             app:cardBackgroundColor="@color/brightBackground"
+            android:layout_below="@id/titleBar"
             app:cardCornerRadius="@dimen/card_radius"
             app:cardElevation="@dimen/card_elevation_small">
 
@@ -131,7 +141,9 @@
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible"
+                        tools:visibility="visible"
+                        >
 
                         <RelativeLayout
                             android:layout_width="36dp"
@@ -157,7 +169,6 @@
                             android:layout_marginStart="42dp"
                             android:letterSpacing="0.03"
                             android:lineSpacingExtra="13sp"
-                            android:text="@{model.orgName}"
                             android:textColor="@color/body_1_87"
                             android:textSize="15sp"
                             tools:text="DenyK" />
@@ -229,13 +240,165 @@
                     android:layout_below="@id/container"
                     android:layout_marginLeft="16dp"
                     android:background="#dadbdd"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
-                <FrameLayout
-                    android:id="@+id/fragmentPanelContainer"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp" />
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/heat_title"
+                            style="@style/Subtitle5"
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:layout_below="@id/head_price"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="12dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:maxLines="1"
+
+                            tools:text="0Edsfsdf" />
+
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/head_price"
+                            style="@style/Headline4"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="-3dp"
+                            android:layout_marginEnd="40dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:maxLines="1"
+
+                            tools:text="0.00" />
+
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/head_subtitle"
+                            style="@style/Subtitle5"
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:layout_below="@id/head_price"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="12dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            tools:text="0Edsfsdf" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/headLayout"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/cardMapBackground"
+                        android:gravity="start|left"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:paddingBottom="35dp">
+
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/head"
+                            style="@style/Subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="23dp"
+                            android:fontFamily="@font/google_sans_medium"
+                            android:layout_gravity="center_vertical|left"
+                            android:text="@string/transaction_details" />
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            style="@style/Overline6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:layout_gravity="center_vertical|left"
+                            android:minHeight="14dp"
+                            android:text="@string/price_agreement_total_price"/>
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/tv_total_price"
+                            style="@style/Subtitle6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|left"
+                            android:layout_marginTop="3dp"
+
+                            tools:text="20.00" />
+
+
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/tvSponsorPriceHeader"
+                            style="@style/Overline6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|left"
+                            android:layout_marginTop="14dp"
+                            android:minHeight="14dp"
+                            tools:text="@string/price_agreement_sponsor_pays_you" />
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/tv_contribution_by"
+                            style="@style/Subtitle6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|left"
+                            android:layout_marginTop="3dp"
+
+                            tools:text="30.00" />
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            style="@style/Overline6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|left"
+                            android:layout_marginTop="14dp"
+                            android:fontFamily="@font/google_sans_medium"
+                            android:minHeight="14dp"
+                            android:text="@string/price_agreement_client_price"
+                            />
+
+                        <io.forus.me.android.presentation.view.component.text.TextView
+                            android:id="@+id/tv_total_amount"
+                            style="@style/Subtitle7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|left"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans_medium"
+
+                            tools:text="30.00" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/name_text_input"

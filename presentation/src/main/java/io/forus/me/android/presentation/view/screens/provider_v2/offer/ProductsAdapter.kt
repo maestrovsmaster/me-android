@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.api_data.models.Product
-import io.forus.me.android.presentation.api_data.models.Transaction
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_voucher_transcation2.view.*
 import java.text.NumberFormat

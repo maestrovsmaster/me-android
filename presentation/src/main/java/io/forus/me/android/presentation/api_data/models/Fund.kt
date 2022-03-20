@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Fund(
     val id: Int,
-    val logo: String,
+    val logo: String?,
     val name: String,
     val organization: Organization,
     val state: String,

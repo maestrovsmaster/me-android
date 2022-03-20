@@ -10,7 +10,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hintTextAppearance="@style/EditTextHint"
@@ -18,7 +17,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_edit"
-            style="@style/EditTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"

@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.forus.me.android.presentation.R
-import io.forus.me.android.presentation.api_data.models.Transaction
+import io.forus.me.android.presentation.api_data.models.ProductVoucher
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_voucher_transcation2.view.*
 import java.text.NumberFormat
 import java.util.*
 
-class TransactionsAdapter (private val callback: (Transaction) -> (Unit)) :
+class TransactionsAdapter (private val callback: (ProductVoucher) -> (Unit)) :
     RecyclerView.Adapter<TransactionsAdapter.ItemViewHolder>() {
 
-    private val list = emptyList<Transaction>().toMutableList()
+    private val list = emptyList<ProductVoucher>().toMutableList()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -34,6 +33,9 @@ class TransactionsAdapter (private val callback: (Transaction) -> (Unit)) :
 
             subtitle1.text = item.product.name
 
+            root.setOnClickListener {
+                callback(item)
+            }
 
 
             val price = item.product.price.toDouble()
@@ -53,7 +55,7 @@ class TransactionsAdapter (private val callback: (Transaction) -> (Unit)) :
     }
 
 
-    fun setItems(newList: List<Transaction>) {
+    fun setItems(newList: List<ProductVoucher>) {
         val diffResult = DiffUtil.calculateDiff(TransactionsDiffUtilCallback(list, newList))
 
         list.clear()
