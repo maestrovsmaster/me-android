@@ -22,27 +22,36 @@ import io.forus.me.android.domain.models.vouchers.Voucher as VoucherDomain
 class VoucherPresenter constructor(private val loadVoucherUseCase: LoadVoucherUseCase,
                                    private val sendEmailUseCase: SendEmailUseCase,
                                    private val voucherDataMapper: VoucherDataMapper,
-                                   private val address: String,
+                                   private val address: String? = null,
                                    private val voucher: Voucher? = null,
                                    private val accountRepository: AccountRepository) : LRPresenter<Voucher, VoucherModel, VoucherView>() {
 
     private lateinit var voucherSubject: Subject<Voucher>
 
     override fun initialModelSingle(): Single<Voucher> {
+        Log.d("MOSBSDFASDF","initialModelSingle address= $address")
         voucherSubject = ReplaySubject.create<Voucher>()
         if (voucher != null) {
             voucherSubject.onNext(voucher)
             voucherSubject.onComplete()
         } else {
-            loadVoucherUseCase.execute(LoadVoucherObserver(),
+            address?.let {
+                loadVoucherUseCase.execute(LoadVoucherObserver(),
                     LoadVoucherUseCase.Params.forVoucher(address))
+            }
+
         }
         return voucherSubject.singleOrError()
     }
 
     override fun refreshModelSingle(): Single<Voucher> {
         voucherSubject = ReplaySubject.create<Voucher>()
-        loadVoucherUseCase.execute(LoadVoucherObserver(), LoadVoucherUseCase.Params.forVoucher(address))
+        address?.let {
+            loadVoucherUseCase.execute(
+                LoadVoucherObserver(),
+                LoadVoucherUseCase.Params.forVoucher(address)
+            )
+        }
 
         return voucherSubject.singleOrError()
     }
@@ -63,7 +72,7 @@ class VoucherPresenter constructor(private val loadVoucherUseCase: LoadVoucherUs
 
                 intent(VoucherView::sendEmailDialogShows).switchMap {
 
-                    if (it) {
+                    if (it && address != null) {
 
                         val observable = ReplaySubject.create<VoucherPartialChanges>()
                         sendEmailUseCase.execute(object : DisposableObserver<Boolean?>() {

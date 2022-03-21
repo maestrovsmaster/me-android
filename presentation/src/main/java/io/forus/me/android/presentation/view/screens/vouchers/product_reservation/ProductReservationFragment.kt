@@ -75,8 +75,8 @@ class ProductReservationFragment : ToolbarLRFragment<ProductReservationModel, Pr
 
         adapter.clickListener = { voucher: Voucher, sharedViews: List<View>, position: Int ->
             if(context != null ) {
-                val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
-                //val intentToLaunch = ProviderV2Activity.getCallingIntent(requireContext(), voucher.address!!)
+                //val intentToLaunch = ProviderActivity.getCallingIntent(requireContext(), voucher.address!!)
+                val intentToLaunch = ProviderV2Activity.getCallingIntent(requireContext(), voucher.address!!)
                 requireContext().startActivity(intentToLaunch)
             }
         }

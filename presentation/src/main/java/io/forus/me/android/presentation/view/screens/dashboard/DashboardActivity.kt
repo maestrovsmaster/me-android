@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -30,6 +31,7 @@ import io.forus.me.android.presentation.helpers.reactivex.DisposableHolder
 import io.forus.me.android.presentation.internal.Injection
 import io.forus.me.android.presentation.view.activity.SlidingPanelActivity
 import io.forus.me.android.presentation.view.fragment.QrFragment
+import io.forus.me.android.presentation.view.screens.vouchers.item.VoucherViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -48,6 +50,12 @@ class DashboardActivity : SlidingPanelActivity(), DashboardContract.View {
     companion object {
         fun getCallingIntent(context: Context): Intent {
             return Intent(context, DashboardActivity::class.java)
+        }
+    }
+
+    private val dashboardViewModel by lazy {
+        ViewModelProvider(this).get(DashboardViewModel::class.java).apply {
+            //  lifecycle.addObserver(this)
         }
     }
 

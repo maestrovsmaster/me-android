@@ -72,9 +72,9 @@ class MainActivity : BaseActivity() {
                 navigateToPinlock()
             } else {
                 navigateToDashboard()
-                Handler(Looper.getMainLooper()).postDelayed({
+               /* Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(ProviderV2Activity.getCallingIntent(this@MainActivity,"0x0d41de39ff5373ef3ad3530d29683f93c37d638f", false))
-                },500)
+                },500)*/
 
             }
         } else {

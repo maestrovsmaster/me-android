@@ -4,12 +4,15 @@ package io.forus.me.android.presentation.view.screens.vouchers.item
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.forus.me.android.presentation.models.vouchers.Voucher
 import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.view.activity.SlidingPanelActivity
 import io.forus.me.android.presentation.view.fragment.QrFragment
+import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
 import kotlinx.android.synthetic.main.activity_toolbar_sliding_panel.*
 
 
@@ -32,15 +35,26 @@ class VoucherActivity : SlidingPanelActivity() {
         }
     }
 
+    private val voucherViewModel by lazy {
+        ViewModelProvider(this).get(VoucherViewModel::class.java).apply {
+            //  lifecycle.addObserver(this)
+        }
+    }
+
     private lateinit var fragment: VoucherFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val id = intent.getStringExtra(ID_EXTRA)!!
         val voucher = intent.getParcelableExtra<Voucher>(VOUCHER_EXTRA)
+        voucherViewModel.address.value = id
+        voucherViewModel.voucher.value = voucher
+        Log.d("MOSBSDFASDF","createPresenter-1 ${voucherViewModel}")
+        Log.d("MOSBSDFASDF","createPresenter-2 ${voucherViewModel.address.value}")
         if (savedInstanceState == null) {
             fragment = when (voucher) {
-                null -> VoucherFragment.newInstance(intent.getStringExtra(ID_EXTRA)!!)!!
+                null -> VoucherFragment.newInstance(id)!!
                 else -> VoucherFragment.newInstance(voucher)
             }
 

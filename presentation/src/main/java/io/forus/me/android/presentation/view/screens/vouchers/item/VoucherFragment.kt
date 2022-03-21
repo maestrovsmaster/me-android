@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -37,6 +38,7 @@ import io.forus.me.android.presentation.models.vouchers.Voucher
 import io.forus.me.android.presentation.view.base.lr.LRViewState
 import io.forus.me.android.presentation.view.fragment.ToolbarLRFragment
 import io.forus.me.android.presentation.view.screens.dashboard.DashboardActivity
+import io.forus.me.android.presentation.view.screens.dashboard.DashboardViewModel
 import io.forus.me.android.presentation.view.screens.vouchers.dialogs.FullscreenDialog
 import io.forus.me.android.presentation.view.screens.vouchers.item.offices_adapter.OfficesAdapter
 import io.forus.me.android.presentation.view.screens.vouchers.item.transactions.TransactionsAdapter
@@ -52,6 +54,18 @@ private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
 
 class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
         VoucherPresenter>(), VoucherView, OnMapReadyCallback {
+
+    private val voucherViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(VoucherViewModel::class.java).apply {
+            //  lifecycle.addObserver(this)
+        }
+    }
+
+    private val dashboardViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(DashboardViewModel::class.java).apply {
+            //  lifecycle.addObserver(this)
+        }
+    }
 
     companion object {
         private const val VOUCHER_ADDRESS_EXTRA = "VOUCHER_ADDRESS_EXTRA"
@@ -79,7 +93,8 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
     }
 
     private var voucher: Voucher? = null
-    private lateinit var address: String
+   // private lateinit var address: String
+    private var address: String? = null
     private lateinit var adapter: TransactionsAdapter
 
     private var map: GoogleMap? = null
@@ -126,11 +141,14 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
 
     override fun sentEmailDialogShown(): Observable<Unit> = sentEmailDialogShown
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.fragment_voucher, container, false).also {
 
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.fragment_voucher, container, false).also {
+        Log.d("MOSBSDFASDF","onCreateView")
         voucher = arguments?.getParcelable(VOUCHER_EXTRA)
         address = arguments?.getString(VOUCHER_ADDRESS_EXTRA, "") ?: ""
         adapter = TransactionsAdapter()
+
     }
 
 
@@ -159,7 +177,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
 
         }
 
-        val qrEncoded = QrCode(QrCode.Type.VOUCHER, address).toJson()
+        val qrEncoded = QrCode(QrCode.Type.VOUCHER, address?:"").toJson()
         iv_qr_icon.setQRText(qrEncoded)
         iv_qr_icon.setOnClickListener {
 
@@ -247,6 +265,23 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
 
     override fun createPresenter(): VoucherPresenter {
         val currencyDataMapper = CurrencyDataMapper()
+
+
+        var pVoucher: Voucher? = null
+        val pAddress = if(dashboardViewModel.address.value != null){
+            pVoucher = dashboardViewModel.voucher.value
+            dashboardViewModel.address.value
+
+        }else{
+            pVoucher = voucherViewModel.voucher.value
+            voucherViewModel.address.value
+        }
+
+        dashboardViewModel.voucher.value = null
+        dashboardViewModel.address.value = null
+        voucherViewModel.voucher.value = null
+        voucherViewModel.address.value = null
+
         return VoucherPresenter(
                 LoadVoucherUseCase(Injection.instance.vouchersRepository, JobExecutor(), UIThread()),
                 SendEmailUseCase(Injection.instance.vouchersRepository, JobExecutor(), UIThread()),
@@ -254,8 +289,8 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
 
                  ProductDataMapper()), ProductDataMapper(), OfficeDataMapper(SchedulerDataMapper())),
 
-                address,
-                voucher,
+            pAddress,
+            pVoucher,
                 Injection.instance.accountRepository
         )
     }
