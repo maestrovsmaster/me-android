@@ -3,6 +3,7 @@ package io.forus.me.android.presentation.navigation
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import io.forus.me.android.domain.models.records.Record
@@ -115,6 +116,7 @@ constructor()//empty
 
     fun navigateToPinNew(context: Context?, accessToken: String){
         if (context != null) {
+            Log.d("accessToken123","Navigator accessToken = $accessToken")
             val intentToLaunch = NewPinActivity.getCallingIntent(context, accessToken)
             context.startActivity(intentToLaunch)
         }

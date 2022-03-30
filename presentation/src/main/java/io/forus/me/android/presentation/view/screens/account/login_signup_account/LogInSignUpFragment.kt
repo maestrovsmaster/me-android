@@ -259,6 +259,7 @@ class LogInSignUpFragment : ToolbarLRFragment<LogInSignUpModel, LogInSignUpView,
             devOptionsBt!!.text = ApiConfig.getCurrentApiType().name
 
             val defaultApi = "https://api.forus.io/"
+            SharedPref.init(requireContext())
             var storedOtherApiStr = SharedPref.read(SharedPref.OPTION_CUSTOM_API_URL, defaultApi)
                     ?: defaultApi
 
@@ -345,6 +346,7 @@ class LogInSignUpFragment : ToolbarLRFragment<LogInSignUpModel, LogInSignUpView,
 
 
     fun closeScreen(accessToken: String) {
+        Log.d("accessToken123","LogInSignIn closeScreen = $accessToken")
         navigator.navigateToPinNew(activity, accessToken)
         activity?.finish()
     }
