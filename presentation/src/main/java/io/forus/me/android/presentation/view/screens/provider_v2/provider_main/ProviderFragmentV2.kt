@@ -19,16 +19,24 @@ import io.forus.me.android.presentation.R
 import io.forus.me.android.presentation.api_data.models.*
 import io.forus.me.android.presentation.databinding.FragmentProviderv2Binding
 import io.forus.me.android.presentation.extension.setVisible
+import io.forus.me.android.presentation.helpers.PaginationScrollListener
 
 import io.forus.me.android.presentation.view.screens.provider_v2.BaseFragment
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderV2Activity
 import io.forus.me.android.presentation.view.screens.provider_v2.ProviderViewModel
 import io.forus.me.android.presentation.view.screens.provider_v2.offer.ProductsAdapter
 import io.forus.me.android.presentation.view.screens.provider_v2.reservation.TransactionsAdapter
+import kotlinx.android.synthetic.main.activity_actions.*
 
 
 class ProviderFragmentV2 : BaseFragment() {
 
+    private var currentPage = 0
+
+    private var isLastPage = false
+    private var isLoading = false
+
+    var listType = ListType.None
 
     private val providerViewModel by lazy {
         ViewModelProvider(activity as ProviderV2Activity).get(ProviderViewModel::class.java).apply {
@@ -76,14 +84,14 @@ class ProviderFragmentV2 : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.progress.setVisible(true)
-        providerViewModel.voucherProvider.observe(viewLifecycleOwner, { voucher ->
+        providerViewModel.voucherProvider.observe(viewLifecycleOwner) { voucher ->
             voucher?.let {
                 binding.progress.setVisible(false)
                 voucherProvider = it
                 updateUI(voucher)
 
             }
-        })
+        }
 
         providerViewModel.voucherSet.observe(viewLifecycleOwner) { set ->
             if (set != null) {
@@ -94,6 +102,19 @@ class ProviderFragmentV2 : BaseFragment() {
                 // fgTODO
             }
         }
+
+        /*providerViewModel.productsList.observe(viewLifecycleOwner){
+            it?.let { list->
+                showProducts(list)
+            }
+        }
+
+        providerViewModel.transactionsList.observe(viewLifecycleOwner){
+            it?.let { list->
+                showProductVouchers(list)
+            }
+        }*/
+
 
         providerViewModel.getVoucher(voucherAddress)
 
@@ -125,6 +146,25 @@ class ProviderFragmentV2 : BaseFragment() {
 
             updateHeader(voucherProvider)
             binding.recycler.layoutManager = LinearLayoutManager(context)
+           // val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+           // binding.recycler.layoutManager = linearLayoutManager
+            /*recycler.addOnScrollListener(object : PaginationScrollListener(LinearLayoutManager(context)) {
+                override fun isLastPage(): Boolean {
+                    return this.isLastPage
+                }
+
+                override fun loadMoreItems() {
+                    this@ProviderFragmentV2.isLoading = true
+
+
+                    loadNextPage()
+                    this@ProviderFragmentV2.currentPage += 1
+                }
+
+                override fun isLoading(): Boolean {
+                    return this@ProviderFragmentV2.isLoading
+                }
+            })*/
 
             binding.tabLayout.removeAllTabs()
 
@@ -170,9 +210,9 @@ class ProviderFragmentV2 : BaseFragment() {
                 updateOrgsSpinner(allowedOrganizations)
 
                 val selectedOrg = allowedOrganizations[0]
-                selectedOrganization = selectedOrganization
+                selectedOrganization = selectedOrg
                 binding.progress.setVisible(true)
-                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
+                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString(), currentPage.toString())
             } else {
                 //error  Продукт использован
             }
@@ -188,6 +228,8 @@ class ProviderFragmentV2 : BaseFragment() {
         }
 
     }
+
+
 
 
     fun updateOrgsSpinner(orgs: List<Organization>) {
@@ -207,7 +249,8 @@ class ProviderFragmentV2 : BaseFragment() {
                 selectedOrganization = selectedOrg
                 Log.d("Itemwd", "selectedOrg $selectedOrg")
                 binding.progress.setVisible(true)
-                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString())
+                providerViewModel.getVoucherSet(voucherAddress, selectedOrg.id.toString() ,
+                    currentPage.toString())
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -218,6 +261,22 @@ class ProviderFragmentV2 : BaseFragment() {
 
         binding.tvCurrentOrg.text = (binding.spOrgs.selectedItem as Organization).name
 
+    }
+
+    private fun loadNextPage(){
+        when(listType){
+            ListType.None -> {}
+            ListType.Products -> {
+                selectedOrganization?.let { org ->
+                    providerViewModel.getAvailableProducts(voucherAddress, org.id.toString(),currentPage.toString())
+                }
+            }
+            ListType.ProductsVoucher -> {
+                selectedOrganization?.let { org ->
+                    providerViewModel.getProductVouchers(voucherAddress, org.id.toString(),currentPage.toString())
+                }
+            }
+        }
     }
 
 
@@ -275,13 +334,16 @@ class ProviderFragmentV2 : BaseFragment() {
         }
     }
 
+
+
     fun showProductVouchers(list: List<ProductVoucher>) {
         val adapter = TransactionsAdapter() {
             goToActionPayment(it.product,true)
         }
         adapter.setItems(list)
         binding.recycler.adapter = adapter
-
+        listType = ListType.ProductsVoucher
+        currentPage = 1
     }
 
     fun showProducts(list: List<Product>) {
@@ -291,6 +353,8 @@ class ProviderFragmentV2 : BaseFragment() {
         adapter.setItems(list)
         binding.recycler.adapter = adapter
 
+        listType = ListType.Products
+        currentPage = 1
     }
 
 
@@ -316,5 +380,9 @@ class ProviderFragmentV2 : BaseFragment() {
         }
     }
 
+
+    enum class ListType{
+        None, Products, ProductsVoucher
+    }
 
 }

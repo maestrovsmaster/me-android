@@ -101,9 +101,9 @@ class ActionsViewModel(application: Application) : BaseViewModel(application) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
 
-                    actionName.postValue(it.voucher.name)
+                    actionName.postValue(it.voucher.name!!)
                     organizationId = it.allowedOrganizations[0].id
-                    fundName.postValue(it.voucher.organizationName)
+                    fundName.postValue(it.voucher.organizationName!!)
 
                     voucher.postValue(it)
                 }

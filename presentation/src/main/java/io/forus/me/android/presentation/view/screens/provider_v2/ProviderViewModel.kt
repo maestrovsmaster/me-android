@@ -14,7 +14,7 @@ public class ProviderViewModel(application: Application) : BaseViewModel(applica
 
     internal val message = MutableLiveData<String>()
 
-
+    private val perPage = 100
 
     fun showMessage(message: String) {
         this.message.postValue(message)
@@ -44,12 +44,42 @@ public class ProviderViewModel(application: Application) : BaseViewModel(applica
     }
 
 
-
-    fun getVoucherSet(
-        address: String, organizationId: String
+    fun getAvailableProducts(
+        address: String, organizationId: String,page: String
     ) {
 
-        repository.getVoucherSet(address,organizationId)
+        repository.getAvailableProducts(address,organizationId,page,perPage.toString())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                productsList.value = it.data
+            }, {
+                errorMessage.postValue(it.localizedMessage)
+
+            }).addTo(disposable)
+    }
+
+    fun getProductVouchers(
+        address: String, organizationId: String,page: String
+    ) {
+
+        repository.getProductVouchers(address,organizationId,page,perPage.toString())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                transactionsList.value = it.data
+            }, {
+                errorMessage.postValue(it.localizedMessage)
+
+            }).addTo(disposable)
+    }
+
+
+    fun getVoucherSet(
+        address: String, organizationId: String,page: String
+    ) {
+
+        repository.getVoucherSet(address,organizationId,page,perPage.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

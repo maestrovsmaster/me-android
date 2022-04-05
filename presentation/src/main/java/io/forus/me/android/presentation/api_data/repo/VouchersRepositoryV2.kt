@@ -13,24 +13,34 @@ import retrofit2.http.Path
 
 class VouchersRepositoryV2(val context: Context, f: () -> RestApi) : RemoteDataSource<RestApi>(f) {
 
-   // fun getVoucher(address: String) =
-     //   service.getVoucher(address)
+    // fun getVoucher(address: String) =
+    //   service.getVoucher(address)
 
     fun getVoucherAsProvider(address: String) =
         service.getVoucherAsProvider(address)
 
 
-    fun getReservedTransactions(address: String, organizationId: String) =
-        service.getReservedProducts(address,organizationId)
+    fun getProductVouchers(address: String, organizationId: String, page: String, perPage: String) =
+        service.getReservedProducts(address, organizationId, page, perPage)
 
-    fun getAvailableProducts(address: String, organizationId: String) =
-        service.getAvailableProducts(address,organizationId)
+    fun getAvailableProducts(
+        address: String,
+        organizationId: String,
+        page: String,
+        perPage: String
+    ) =
+        service.getAvailableProducts(address, organizationId, page, perPage)
 
 
-    fun getVoucherSet(address: String, organizationId: String): Observable<VoucherSet> {
+    fun getVoucherSet(
+        address: String,
+        organizationId: String,
+        page: String,
+        perPage: String
+    ): Observable<VoucherSet> {
         return Observable.zip(
-            service.getReservedProducts(address,organizationId),
-            service.getAvailableProducts(address,organizationId),
+            service.getReservedProducts(address, organizationId, page, perPage),
+            service.getAvailableProducts(address, organizationId, page, perPage),
             BiFunction { transactionsResponse, productsResponse ->
                 val voucherSet = VoucherSet(transactionsResponse.data, productsResponse.data)
                 voucherSet

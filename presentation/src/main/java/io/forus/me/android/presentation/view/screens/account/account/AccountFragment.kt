@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -213,8 +214,11 @@ class AccountFragment : ToolbarLRFragment<AccountModel, AccountView, AccountPres
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("ChangePinMode","onActivityResult")
         if (requestCode == REQUEST_CHANGE_PIN && resultCode == Activity.RESULT_OK) {
+            Log.d("ChangePinMode","onActivityResult 2")
             updateModel()
+            
         }
     }
 }

@@ -16,10 +16,16 @@ interface RestApi {
     fun getVoucherAsProvider(@Path("address") address: String): Observable<VoucherProviderResponse>
 
     @GET("api/v1/platform/provider/vouchers/{address}/product-vouchers")
-    fun getReservedProducts(@Path("address") address: String, @Query("organization_id") organization_id: String): Observable<TransactionsResponse>
+    fun getReservedProducts(@Path("address") address: String,
+                            @Query("organization_id") organization_id: String,
+                            @Query("page") page: String,
+                            @Query("per_page") perPage: String): Observable<TransactionsResponse>
 
     @GET("api/v1/platform/provider/vouchers/{address}/products")
-    fun getAvailableProducts(@Path("address") address: String, @Query("organization_id") organization_id: String): Observable<ProductsResponse>
+    fun getAvailableProducts(@Path("address") address: String,
+                             @Query("organization_id") organization_id: String,
+                             @Query("page") page: String,
+                             @Query("per_page") perPage: String): Observable<ProductsResponse>
 
 
 }
