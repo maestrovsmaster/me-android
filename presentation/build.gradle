@@ -188,6 +188,8 @@ dependencies {
     implementation "com.hannesdorfmann.mosby3:mvi:3.1.1"
     implementation "com.hannesdorfmann.mosby3:viewstate:3.1.1"
 
+   // implementation 'com.github.sockeqwe:mosby:345efbb0c0'
+
 
     implementation "com.jakewharton.rxbinding2:rxbinding:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:2.2.0"

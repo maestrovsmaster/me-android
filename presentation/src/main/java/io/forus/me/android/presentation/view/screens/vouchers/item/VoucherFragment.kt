@@ -211,6 +211,7 @@ class VoucherFragment : ToolbarLRFragment<VoucherModel, VoucherView,
                         voucher?.expireDate)
             }
 
+
             (activity as? DashboardActivity)?.showPopupQRFragment(qrEncoded, fundName, title, qrDescription)
 
 
