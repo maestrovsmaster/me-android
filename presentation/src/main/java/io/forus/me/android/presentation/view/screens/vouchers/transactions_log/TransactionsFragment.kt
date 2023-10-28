@@ -129,7 +129,7 @@ class TransactionsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 mainViewModel.calendarFrom.value!!.get(Calendar.MONTH),
                 mainViewModel.calendarFrom.value!!.get(Calendar.DAY_OF_MONTH)
             )
-            dpd.show(requireActivity().fragmentManager, "Datepickerdialog")
+//            dpd.show(requireActivity().fragmentManager, "Datepickerdialog")  // TODO need fix
 
         }
 

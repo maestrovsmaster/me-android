@@ -31,11 +31,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class DashboardActivity : SlidingPanelActivity(), DashboardContract.View,
+class DashboardActivity(override val viewModel: VoucherViewModel) : SlidingPanelActivity(), DashboardContract.View,
     MViewModelProvider<VoucherViewModel> {
 
 
-    override val viewModel: VoucherViewModel by viewModels()
+  //  override val viewModel: VoucherViewModel by viewModels()
 
    // private val loggingViewModelFactory by lazy {
     //    LoggingViewModelFactory(Injection.instance.firestoreTokenManager)
