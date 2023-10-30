@@ -24,9 +24,8 @@ class FirestoreTokenManager constructor(
 
 
     public fun authorizeFirestore(onComplete: (()->(Unit))?) {
-        //Log.d(TAG,"${BuildConfig.SERVER_API_KEY}")
-        getServerApiKey()?.let {
-            getFirestoreToken(it, onComplete)
+        getServerApiKey()?.let { serverApiKey ->
+            getFirestoreToken(serverApiKey, onComplete)
         } ?: kotlin.run {
             Log.e(
                 TAG,
@@ -47,8 +46,8 @@ class FirestoreTokenManager constructor(
                     }
                 },
                 { error -> // onError
+                    Log.d(TAG, "Firestore token: $error")
                     error.printStackTrace()
-                    // можна додати більш вивчену обробку помилок тут
                 }
             )
 
