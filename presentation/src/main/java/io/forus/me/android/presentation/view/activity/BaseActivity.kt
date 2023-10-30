@@ -1,8 +1,5 @@
 package io.forus.me.android.presentation.view.activity
 
-//import io.forus.me.android.presentation._AndroidApplication;
-//import io.forus.me.android.presentation.internal.di.components.ApplicationComponent;
-//import io.forus.me.android.presentation.internal.di.modules.ActivityModule;
 
 import android.content.Context
 import android.util.Log
@@ -82,17 +79,6 @@ abstract class BaseActivity : AppCompatActivity() {
         val transaction = supportFragmentManager
                 .beginTransaction()
 
-//        val sharedTransition = Explode()
-//
-//        fragment.sharedElementEnterTransition = sharedTransition
-//        fragment.sharedElementReturnTransition = sharedTransition
-//        fragment.enterTransition = Fade()
-//        fragment.exitTransition = Fade()
-//
-//        sharedViews.forEach {
-//            transaction.addSharedElement(it, ViewCompat.getTransitionName(it) ?: "")
-//        }
-
         if (addToBackStack)
             transaction.addToBackStack(null)
 
@@ -125,6 +111,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
-   // abstract fun onOptionsItemSelected(item: MenuItem?): Boolean
+
 
 }

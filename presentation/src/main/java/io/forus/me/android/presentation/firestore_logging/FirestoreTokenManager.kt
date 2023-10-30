@@ -39,13 +39,13 @@ class FirestoreTokenManager constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { firestoreToken -> // onNext
+                { firestoreToken ->
                     Log.d(TAG, "Firestore token: $firestoreToken")
                     firestoreToken?.let {
                         registerFirestoreUser(firestoreToken, onComplete)
                     }
                 },
-                { error -> // onError
+                { error ->
                     Log.d(TAG, "Firestore token: $error")
                     error.printStackTrace()
                 }
