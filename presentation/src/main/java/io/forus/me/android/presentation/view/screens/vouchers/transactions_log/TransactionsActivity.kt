@@ -8,13 +8,12 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.forus.me.android.domain.models.vouchers.Transaction
 import io.forus.me.android.presentation.R
-import io.forus.me.android.presentation.view.activity.SlidingPanelActivity
+import io.forus.me.android.presentation.view.MeBottomSheetDialogFragment
+import io.forus.me.android.presentation.view.activity.CommonActivity
 import io.forus.me.android.presentation.view.component.CustomTypefaceSpan
 import io.forus.me.android.presentation.view.screens.vouchers.transactions_log.details.TransactionDetailsFragment
 //import kotlinx.android.synthetic.main.activity_toolbar_sliding_panel.*
@@ -23,11 +22,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TransactionsActivity : SlidingPanelActivity() {
+class TransactionsActivity : CommonActivity() {
 
     val dateFormat = SimpleDateFormat("d MMMM, HH:mm", Locale.getDefault())
 
-    private var slidingLayout : SlidingUpPanelLayout? = null
+    override val viewID: Int
+        get() = R.layout.activity_layout
 
     companion object {
 
@@ -39,8 +39,8 @@ class TransactionsActivity : SlidingPanelActivity() {
         }
     }
 
-    override val height: Float
-        get() = 448f
+    //override val height: Float
+    //    get() = 448f
 
 
     private lateinit var fragment: TransactionsFragment
@@ -55,7 +55,7 @@ class TransactionsActivity : SlidingPanelActivity() {
             addFragment(R.id.fragmentContainer, fragment)
         }
 
-        slidingLayout = findViewById(R.id.sliding_layout)
+       /* slidingLayout = findViewById(R.id.sliding_layout)
 
         slidingLayout?.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {}
@@ -74,7 +74,7 @@ class TransactionsActivity : SlidingPanelActivity() {
                     }
                 }
             }
-        })
+        })*/
     }
 
     fun showPopupTransactionDetailsFragment(item: Transaction) {
@@ -120,15 +120,15 @@ class TransactionsActivity : SlidingPanelActivity() {
             else -> state = item.state ?: ""
         }
 
-
-        addPopupFragment(
+        val meBottomSheet = MeBottomSheetDialogFragment.newInstance(
             TransactionDetailsFragment.newIntent(
                 item.id, item.fund?.name,
                 item.organization?.name,
                 NumberFormat.getCurrencyInstance(Locale("nl", "NL"))
                     .format(item.amount), state
-            ), spannable
-        )
+            ), spannable.toString())
+        meBottomSheet.show(supportFragmentManager, meBottomSheet.tag)
+
 
 
     }

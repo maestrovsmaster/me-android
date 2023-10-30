@@ -5,6 +5,7 @@ package io.forus.me.android.presentation.view.activity
 //import io.forus.me.android.presentation.internal.di.modules.ActivityModule;
 
 import android.content.Context
+import android.util.Log
 import androidx.transition.ChangeBounds
 import androidx.transition.ChangeClipBounds
 import androidx.transition.ChangeTransform

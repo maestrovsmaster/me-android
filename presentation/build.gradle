@@ -198,7 +198,6 @@ dependencies {
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.ahbottomnavigation
     implementation presentationDependencies.cardView
-    implementation "com.sothree.slidinguppanel:library:3.4.0"
     implementation presentationDependencies.glide
     implementation presentationDependencies.circleIndicator
     implementation presentationDependencies.materialDialogs

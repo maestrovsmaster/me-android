@@ -23,7 +23,8 @@ import io.forus.me.android.presentation.UIThread
 import io.forus.me.android.presentation.databinding.ActivityDashboardBinding
 import io.forus.me.android.presentation.helpers.reactivex.DisposableHolder
 import io.forus.me.android.presentation.internal.Injection
-import io.forus.me.android.presentation.view.activity.SlidingPanelActivity
+import io.forus.me.android.presentation.view.MeBottomSheetDialogFragment
+import io.forus.me.android.presentation.view.activity.CommonActivity
 import io.forus.me.android.presentation.view.base.MViewModelProvider
 import io.forus.me.android.presentation.view.fragment.QrFragment
 import io.forus.me.android.presentation.view.screens.vouchers.VoucherViewModel
@@ -31,7 +32,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class DashboardActivity() : SlidingPanelActivity(), DashboardContract.View,
+class DashboardActivity() : CommonActivity(), DashboardContract.View,
     MViewModelProvider<VoucherViewModel> {
 
 
@@ -131,7 +132,10 @@ class DashboardActivity() : SlidingPanelActivity(), DashboardContract.View,
     }
 
     fun showPopupQRFragment(address: String,qrHead: String? = null, qrSubtitle: String? = null, qrDescription: String? = null) {
-        addPopupFragment(QrFragment.newIntent(address, qrHead, qrSubtitle, qrDescription), "QR code")
+
+        val meBottomSheet = MeBottomSheetDialogFragment.newInstance(
+            QrFragment.newIntent(address, qrHead, qrSubtitle, qrDescription),"QR code")
+        meBottomSheet.show(supportFragmentManager, meBottomSheet.tag)
     }
 
 
