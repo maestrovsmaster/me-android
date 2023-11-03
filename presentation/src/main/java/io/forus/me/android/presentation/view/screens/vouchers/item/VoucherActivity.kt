@@ -35,7 +35,6 @@ class VoucherActivity : CommonActivity(), MViewModelProvider<VoucherViewModel> {
 
     private lateinit var fragment: VoucherFragment
 
-   //  override var slidingLayout:com.sothree.slidinguppanel.SlidingUpPanelLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,26 +52,6 @@ class VoucherActivity : CommonActivity(), MViewModelProvider<VoucherViewModel> {
 
             addFragment(R.id.fragmentContainer, fragment)
         }
-
-       // slidingLayout = findViewById(R.id.sliding_layout)
-
-       /* slidingLayout?.addPanelSlideListener(object: SlidingUpPanelLayout.PanelSlideListener{
-            override fun onPanelSlide(panel: View?, slideOffset: Float) {}
-
-            override fun onPanelStateChanged(panel: View?, previousState: SlidingUpPanelLayout.PanelState?, newState: SlidingUpPanelLayout.PanelState?) {
-                when(newState){
-                    SlidingUpPanelLayout.PanelState.EXPANDED, SlidingUpPanelLayout.PanelState.ANCHORED -> {
-                        fragment.blurBackground()
-                    }
-                    else -> {
-                        fragment.unblurBackground()
-                    }
-                }
-            }
-        })*/
     }
 
-    /*fun showPopupQRFragment(address: String){
-        addPopupFragment(QrFragment.newIntent(address, resources.getString(R.string.voucher_qr_code_subtitle), resources.getString(R.string.voucher_qr_code_description)), "QR code")
-    }*/
 }

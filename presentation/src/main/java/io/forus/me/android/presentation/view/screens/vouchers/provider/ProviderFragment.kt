@@ -299,10 +299,6 @@ class ProviderFragment : ToolbarLRFragment<ProviderModel, ProviderView, Provider
         requireActivity().startActivity(i)
 
 
-        /*FullscreenDialog.display(fragmentManager,requireContext().resources.getString(R.string.success),
-                requireContext().resources.getString(R.string.vouchers_apply_success),
-                requireContext().resources.getString(R.string.me_ok)) { activity?.finish() }*/
-
     }
 
 }

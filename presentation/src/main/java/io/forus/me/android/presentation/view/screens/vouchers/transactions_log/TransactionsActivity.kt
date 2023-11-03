@@ -39,42 +39,16 @@ class TransactionsActivity : CommonActivity() {
         }
     }
 
-    //override val height: Float
-    //    get() = 448f
-
-
     private lateinit var fragment: TransactionsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         if (savedInstanceState == null) {
             fragment = TransactionsFragment.newInstance()
 
             addFragment(R.id.fragmentContainer, fragment)
         }
-
-       /* slidingLayout = findViewById(R.id.sliding_layout)
-
-        slidingLayout?.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
-            override fun onPanelSlide(panel: View?, slideOffset: Float) {}
-
-            override fun onPanelStateChanged(
-                panel: View?,
-                previousState: SlidingUpPanelLayout.PanelState?,
-                newState: SlidingUpPanelLayout.PanelState?
-            ) {
-                when (newState) {
-                    SlidingUpPanelLayout.PanelState.EXPANDED, SlidingUpPanelLayout.PanelState.ANCHORED -> {
-                        fragment.blurBackground()
-                    }
-                    else -> {
-                        fragment.unblurBackground()
-                    }
-                }
-            }
-        })*/
     }
 
     fun showPopupTransactionDetailsFragment(item: Transaction) {
@@ -128,8 +102,6 @@ class TransactionsActivity : CommonActivity() {
                     .format(item.amount), state
             ), spannable.toString())
         meBottomSheet.show(supportFragmentManager, meBottomSheet.tag)
-
-
 
     }
 }
